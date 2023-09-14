@@ -30,12 +30,12 @@ module.exports = {
   env: {
     baseApiUrl: process.env.NODE_ENV === 'development'
     ? 'http://localhost:4000' // development api
-    : '',
+    : 'https://survey-backend-ae87.onrender.com/',
   },
   publicRuntimeConfig: {
     apiUrl:
     process.env.NODE_ENV === 'development'
     ? 'http://localhost:7000' // development api
-    : '', // production api
+    : 'https://survey-backend-ae87.onrender.com/', // production api
   },
 }
