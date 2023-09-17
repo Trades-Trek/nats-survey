@@ -1,5 +1,7 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { userService } from 'src/services'
+import { AuthContext } from 'src/context/AuthContext'
 
 import CardWrapper from 'src/component/Cardwrapper'
 import Grid from '@mui/material/Grid'
@@ -38,17 +40,20 @@ const schema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup
     .string()
-    .min(8, obj => showErrors('password', obj.value.length, obj.min))
+    .min(1, obj => showErrors('password', obj.value.length, obj.min))
     .required()
 })
 
 const Login = () => {
   // ** States
+  const { setUser } = useContext(AuthContext)
+  const [validate, setValidate] = useState(false)
+  const [error, setError] = useState()
   const [state, setState] = useState({
     password: '',
     showPassword: false
   })
-
+  const [isLoading, setIsLoading] = useState(false)
   // ** Hook
   const {
     control,
@@ -63,11 +68,58 @@ const Login = () => {
   const handleClickShowPassword = () => {
     setState({ ...state, showPassword: !state.showPassword })
   }
-  const onSubmit = () => toast.success('Form Submitted')
+
+  const onSubmit = data => {
+    setIsLoading(true)
+    userService
+      .login(data)
+      .then(res => {
+        if (res?.success === true) {
+          setUser(res.user)
+          setIsLoading(false)
+          setValidate(false)
+          setError()
+          
+          
+        
+          toast.success('Sign in successfully')
+        } else if (res?.success === false && !res.user) {
+          setValidate(true)
+          setError(res.message)
+          setIsLoading(false)
+        } else if (res?.success === false && res?.profileStatus === 0) {
+          setValidate(true)
+
+          setError(res.message)
+          setBtnStatus(false)
+          setIsLoading(false)
+
+          localStorage.setItem('email', res.email)
+          router.push('/otp')
+        } else if (res?.success === false) {
+          setValidate(true)
+          setError(res.message)
+          setIsLoading(false)
+        } else {
+          setValidate(true)
+          setError('Something went wrong')
+          setIsLoading(false)
+        }
+      })
+      .catch(error => {
+        setValidate(true)
+        setError(error.message)
+      })
+  }
 
   return (
     <CardWrapper HeaderComponent={<></>} title='Log in to your account'>
       <form onSubmit={handleSubmit(onSubmit)}>
+        {validate && (
+          <div className='' style={{ border: '1px solid red', margin: '20px' }}>
+            <p style={{ textAlign: 'center', padding: '10px', color: 'red' }}>{error}</p>
+          </div>
+        )}
         <Grid container spacing={5}>
           <Grid item xs={12} sx={{ my: 5 }}>
             <FormControl fullWidth>
@@ -145,7 +197,7 @@ const Login = () => {
               type='submit'
               variant='contained'
             >
-              Submit
+              {isLoading ? 'Loading...' : ' Submit'}
             </Button>
           </Grid>
         </Grid>
@@ -155,6 +207,6 @@ const Login = () => {
 }
 
 Login.getLayout = page => <BlankLayout>{page}</BlankLayout>
-Login.guestGuard = true
+Login.authGuard = false
 
 export default Login

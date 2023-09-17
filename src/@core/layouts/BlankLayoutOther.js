@@ -12,12 +12,14 @@ import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import Button from '@mui/material/Button'
-
+import { userService } from 'src/services'
 import MenuItem from '@mui/material/MenuItem'
+import { AuthContext } from 'src/context/AuthContext'
+
 
 import Hidden from '@mui/material/Hidden'
 
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
 import Drawer from '@mui/material/Drawer'
 
@@ -48,9 +50,16 @@ const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
 const BlankLayout = ({ children }) => {
   return (
     <BlankLayoutWrapper className='layout-wrapper'>
-      <Box className='app-content' sx={{
-        background: '#E6F2F2',
-         overflow: 'hidden', minHeight: '100vh', position: 'relative', padding: 15 }}>
+      <Box
+        className='app-content'
+        sx={{
+          background: '#E6F2F2',
+          overflow: 'hidden',
+          minHeight: '100vh',
+          position: 'relative',
+          padding: 15
+        }}
+      >
         <ResponsiveAppBar />
         {children}
       </Box>
@@ -62,7 +71,7 @@ export default BlankLayout
 
 function ResponsiveAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null)
-
+  const { setUser } = useContext(AuthContext)
   const handleMenu = event => {
     setAnchorEl(event.currentTarget)
   }
@@ -77,6 +86,11 @@ function ResponsiveAppBar() {
   const UniqueButton = ({ title, route }) => (
     <Button
       onClick={() => {
+        if (route === 'logout') {
+          setUser(null)
+          userService.logout()
+          return
+        }
         if (route) router.push(route)
       }}
       variant='contained'
@@ -100,6 +114,10 @@ function ResponsiveAppBar() {
     }
     if (currentPageName === '/') {
       return <UniqueButton title='Login' route='login' />
+    }
+
+    if (currentPageName === '/dashboard') {
+      return <UniqueButton title='Logout' route='logout' />
     }
 
     return (
@@ -132,10 +150,14 @@ function ResponsiveAppBar() {
     <div>
       <AppBar position='static' style={{ boxShadow: 'none' }}>
         <Toolbar style={appBarStyle}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Typography variant='h6' component='div'>
-              Logo
-            </Typography>
+          <div style={{ display: 'flex', alignItems: 'center', height: '200px', width: '200px' }}>
+            <Image
+              src='/images/landingPage/logo.png' // Replace with the actual path to your image
+              alt='Logo'
+              width={100} // Set the desired width
+              height={100} // Set the desired height
+              layout='responsive' // Make the image responsive
+            />
           </div>
 
           {/* Buttons */}
@@ -168,6 +190,7 @@ function ResponsiveAppBar() {
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
               <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={() => userService.logout()}>Log out</MenuItem>
             </Menu>
           </Hidden>
         </Toolbar>

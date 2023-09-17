@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
+import authConfig from 'src/configs/auth'
 
 // ** Hooks Import
 import { useAuth } from 'src/hooks/useAuth'
@@ -15,7 +16,7 @@ const GuestGuard = props => {
     if (!router.isReady) {
       return
     }
-    if (window.localStorage.getItem('userData')) {
+    if (!window.localStorage.getItem(authConfig.storageTokenKeyName)) {
       router.replace('/')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

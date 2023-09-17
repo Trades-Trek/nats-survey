@@ -21,6 +21,6 @@ import {
   }
   
 Landing.getLayout = page => <BlankLayout>{page}</BlankLayout>
-Landing.guestGuard = true
-
+Landing.guestGuard = false
+Landing.authGuard = false
 export default Landing;

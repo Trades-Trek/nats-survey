@@ -52,7 +52,7 @@ function Header() {
             >
               Get Started Today
             </Button>
-            <Image
+            {/* <Image
               src={line}
               position={'absolute'}
               bottom={'0'}
@@ -60,11 +60,11 @@ function Header() {
               w={'7.8875rem'}
               h={'5.72969rem'}
               display={{ base: 'none', md: '', lg: 'flex' }}
-            />
-          </Box>
+            /> */}
+          </Box>   
           <Flex position={'relative'}>
             <Image
-              src={headerImage}
+               src='/images/landingPage/headerImage.png'
               alt="image"
               mt={'2rem'}
               position={'relative'}
@@ -72,15 +72,15 @@ function Header() {
               zIndex={'1000'}
                 display={{ base: 'none', md: '', lg: 'flex' }}
             />
-               <Image
+               {/* <Image
               src={mobileHeaderImage}
               alt="image"
               mt={'2rem'}
              
                 display={{ base: 'block', md: '', lg: 'none' }}
-            />
+            /> */}
             
-            <Image
+            {/* <Image
               src={circle}
               w={'6.25rem'}
               h={'6.25rem'}
@@ -88,7 +88,7 @@ function Header() {
               right={'2rem'}
               bottom={'12rem'}
               display={{ base: 'none', md: '', lg: 'flex' }}
-            />
+            /> */}
           </Flex>
         </Flex>
       </Box>

@@ -73,6 +73,8 @@ if (themeConfig.routingLoader) {
 }
 
 const Guard = ({ children, authGuard, guestGuard }) => {
+
+  console.log('authGuard', authGuard,   'guestGuard>' , guestGuard)
   if (guestGuard) {
     return <GuestGuard fallback={<Spinner />}>{children}</GuestGuard>
   } else if (!guestGuard && !authGuard) {
@@ -100,12 +102,12 @@ const App = props => {
     
       <CacheProvider value={emotionCache}>
         <Head>
-          <title>{`${themeConfig.templateName} - Material Design React Admin Template`}</title>
+          <title>{`Net surveys`}</title>
           <meta
             name='description'
-            content={`${themeConfig.templateName} – Material Design React Admin Dashboard Template – is the most developer friendly & highly customizable Admin Dashboard Template based on MUI v5.`}
+            content={`${themeConfig.templateName} – Fill surveys and get rewarded`}
           />
-          <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' />
+          <meta name='keywords' content='surveys,' />
           <meta name='viewport' content='initial-scale=1, width=device-width' />
         </Head>
 
@@ -116,11 +118,11 @@ const App = props => {
                 return (
                   <ThemeComponent settings={settings}>
                     <WindowWrapper>
-                      {/* <Guard authGuard={authGuard} guestGuard={guestGuard}> */}
-                        {/* <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}> */}
+                      <Guard authGuard={authGuard} guestGuard={guestGuard}>
+                     
                           {getLayout(<Component {...pageProps} />)}
-                        {/* </AclGuard> */}
-                      {/* </Guard> */}
+                   
+                      </Guard>
                     </WindowWrapper>
                     <ReactHotToast>
                       <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />

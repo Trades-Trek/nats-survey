@@ -43,7 +43,7 @@ function LandingPage() {
         >
           <Box mt={{ base: '0rem', lg: '10rem' }}>
             <Image
-              src={section2Image}
+              src='/images/landingPage/happy-man-reading.png'
               w={{ base: '90%', lg: '30rem' }}
               height={{ base: '32rem', lg: '35rem' }}
               borderTopRadius={'1rem'}
@@ -93,6 +93,7 @@ function LandingPage() {
             How It Works
           </Text>
           <Text
+            id='how-it-works'
             fontSize={{ base: '1rem', lg: '1.5rem' }}
             fontWeight={{ base: '400', lg: '400' }}
             letterSpacing={{ base: '0.055rem', lg: '0.0825rem' }}

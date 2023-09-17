@@ -1,9 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext  } from 'react'
 import CardWrapper from 'src/component/Cardwrapper'
 import BlankLayout from 'src/@core/layouts/BlankLayoutOther'
 import OtpInput from 'react-otp-input'
 import { useRouter } from 'next/router'
 import Button from '@mui/material/Button'
+import toast from 'react-hot-toast'
+import { userService } from 'src/services'
+import authConfig from 'src/configs/auth'
+import { AuthContext } from 'src/context/AuthContext'
 
 const otpInputStyle = {
   display: 'flex',
@@ -12,6 +16,7 @@ const otpInputStyle = {
 }
 
 const Otp = () => {
+  const { setUser } = useContext(AuthContext);
   const router = useRouter()
   const [otp, setOpt] = useState('')
   const [error, setError] = useState(null)
@@ -20,7 +25,7 @@ const Otp = () => {
   const [isLoaderActive, setLoaderStatus] = useState(false)
 
   useEffect(() => {
-    let email = localStorage.getItem('email')
+    let email = localStorage.getItem(authConfig.netsurveyemail)
     if (email) {
       setEmailAddress(email)
     }
@@ -28,7 +33,7 @@ const Otp = () => {
 
   const resendOtp = async () => {
     setOpt('')
-    let email = localStorage.getItem('email')
+    let email = localStorage.getItem(authConfig.netsurveyemail)
     try {
       const res = await userService.resendOtp(email)
       if (res?.success === true) {
@@ -37,15 +42,11 @@ const Otp = () => {
         setMinutes(1)
         setSeconds(59)
       } else if (res?.success === false) {
-        if (!toast.isActive(toastId.current)) {
-          toastId.current = toast.error(res.message)
-        }
+        toast.error(res.message)
         setResendOtpClassActive(false)
       }
     } catch (error) {
-      if (!toast.isActive(toastId.current)) {
-        toastId.current = toast.error(error)
-      }
+      toast.error(res.message)
     }
   }
 
@@ -59,26 +60,15 @@ const Otp = () => {
       setError('Otp is required')
     } else {
       setError('')
-      let email = localStorage.getItem('email')
+      let email = localStorage.getItem(authConfig.netsurveyemail)
       const response = await userService.verifyLoginOtp(email, Number(otp))
       if (response.success === false) {
         setBtnStatus(false)
         setLoaderStatus(false)
-        if (!toast.isActive(toastId.current)) {
-          toastId.current = toast.error(response.message, {
-            position: toast.POSITION.TOP_RIGHT
-          })
-          setBtnStatus(false)
-          setLoaderStatus(false)
-        }
+        toast.error(response.message)
       } else {
-        if (!toast.isActive(toastId.current)) {
-          toastId.current = toast.success(response.message, {
-            position: toast.POSITION.TOP_RIGHT
-          })
-          setLoaderStatus(false)
-          setBtnStatus(false)
-        }
+        setUser(response.user)
+        toast.success(response.message)
         setBtnStatus(false)
         setLoaderStatus(false)
       }
@@ -96,7 +86,7 @@ const Otp = () => {
         </>
       }
     >
-      <p style={{textAlign: 'center'}}>An OTP has been sent to your email</p>
+      <p style={{ textAlign: 'center' }}>An OTP has been sent to {emailAddress || 'your email address'}</p>
       <form className='otp--form' onSubmit={e => verifyOtp(e)} id='create-course-form'>
         <div className='form--item otp--input' style={otpInputStyle}>
           <OtpInput
@@ -114,6 +104,18 @@ const Otp = () => {
             renderSeparator={<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>}
           />
         </div>
+
+        {emailAddress && (
+          <div className='form--bottom--content' style={{textAlign: 'center'}}>
+            <p>
+              Didn’t get code?{' '}
+              <a href='#' onClick={() => resendOtp()}>
+                Resend
+              </a>
+            </p>
+          </div>
+        )}
+
         <div className='info--button'>
           <Button
             size='large'

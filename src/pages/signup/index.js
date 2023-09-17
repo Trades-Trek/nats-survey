@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import countries from '../../@fake-db/countries'
 import { useRouter } from 'next/router'
 import Grid from '@mui/material/Grid'
@@ -15,7 +15,7 @@ import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import Box from '@mui/material/Box'
 import Autocomplete from '@mui/material/Autocomplete'
-import { userService } from '../../../services'
+import { userService } from 'src/services'
 import CardWrapper from 'src/component/Cardwrapper'
 // ** Third Party Imports
 import * as yup from 'yup'
@@ -82,22 +82,30 @@ const Register = () => {
   const router = useRouter()
   const [validate, setValidate] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState();
+  const [error, setError] = useState()
   const [state, setState] = useState({
     password: '',
     showPassword: false
   })
 
-  // ** Hook
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({
     defaultValues,
     mode: 'onChange',
     resolver: yupResolver(schema)
   })
+
+  useEffect(() => {
+    if (router.query) {
+      reset({
+        refferalCode: router?.query?.reffercode || ''
+      })
+    }
+  }, [router])
 
   const handleClickShowPassword = () => {
     setState({ ...state, showPassword: !state.showPassword })
@@ -109,13 +117,12 @@ const Register = () => {
       .then(res => {
         if (res?.success === true) {
           setValidate(false)
-          localStorage.setItem('email', data.email) //why ?
-          setError(res.message) //look into
-          localStorage.setItem('otp', data.email)
-          // dispatch(setUser(res.user));
+          localStorage.setItem('net_survey_email', data.email) //why ?
+          setError() //look into
+          localStorage.setItem('net_survey_otp', data.email)
           setIsLoading(false)
           router.replace('/otp')
-          toast.success('Form Submitted')
+          toast.success('Sign up successful')
         } else if (res?.success === false) {
           setValidate(true)
           setError(res.message)
@@ -143,6 +150,11 @@ const Register = () => {
       }
     >
       <form onSubmit={handleSubmit(onSubmit)}>
+        {validate && (
+          <div className='' style={{ border: '1px solid red', margin: '20px' }}>
+            <p style={{ textAlign: 'center', padding: '10px', color: 'red' }}>{error}</p>
+          </div>
+        )}
         <Grid container spacing={5}>
           <Grid item xs={12} sx={{ my: 5 }}>
             <FormControl fullWidth>
@@ -381,7 +393,7 @@ const Register = () => {
               type='submit'
               variant='contained'
             >
-              Submit
+              {isLoading ? 'Loading...' : ' Submit'}
             </Button>
           </Grid>
         </Grid>
@@ -391,6 +403,5 @@ const Register = () => {
 }
 
 Register.getLayout = page => <BlankLayout>{page}</BlankLayout>
-Register.guestGuard = true
-
+Register.authGuard = false
 export default Register

@@ -4,6 +4,7 @@ import Nav from './nav';
 import { Box } from '@chakra-ui/react';
 import MobileNav from './mobileNav';
 
+
 function Navbar() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
