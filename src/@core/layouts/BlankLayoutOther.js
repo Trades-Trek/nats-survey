@@ -72,6 +72,7 @@ export default BlankLayout
 function ResponsiveAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const { setUser } = useContext(AuthContext)
+
   const handleMenu = event => {
     setAnchorEl(event.currentTarget)
   }
@@ -89,7 +90,8 @@ function ResponsiveAppBar() {
         if (route === 'logout') {
           setUser(null)
           userService.logout()
-          return
+          
+return
         }
         if (route) router.push(route)
       }}

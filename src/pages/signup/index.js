@@ -17,6 +17,7 @@ import Box from '@mui/material/Box'
 import Autocomplete from '@mui/material/Autocomplete'
 import { userService } from 'src/services'
 import CardWrapper from 'src/component/Cardwrapper'
+
 // ** Third Party Imports
 import * as yup from 'yup'
 import toast from 'react-hot-toast'
@@ -83,6 +84,7 @@ const Register = () => {
   const [validate, setValidate] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState()
+
   const [state, setState] = useState({
     password: '',
     showPassword: false
@@ -110,6 +112,7 @@ const Register = () => {
   const handleClickShowPassword = () => {
     setState({ ...state, showPassword: !state.showPassword })
   }
+
   const onSubmit = data => {
     data.country = data.country.label
     userService
@@ -404,4 +407,5 @@ const Register = () => {
 
 Register.getLayout = page => <BlankLayout>{page}</BlankLayout>
 Register.authGuard = false
+
 export default Register

@@ -3,6 +3,7 @@ import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import Image from 'next/image'
+
 const FallbackSpinner = ({ sx }) => {
   // ** Hook
   const theme = useTheme()

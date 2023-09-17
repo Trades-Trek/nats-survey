@@ -20,7 +20,8 @@ function getPendingOrders(page=1) {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 function createOrder(data){
@@ -29,7 +30,8 @@ delete data._id
   data.quantity=Number(data.quantity)
   data.rate=data.orderType=='Limit'?Number(data.rate):Number(data.Last)
   data.gameId=localStorage.getItem("GameId")
-  return fetchWrapper
+  
+return fetchWrapper
     .post(`${baseUrl}/user/order/create`,data)
 
     .then((res) => {
@@ -39,7 +41,8 @@ delete data._id
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -54,7 +57,8 @@ function getFailedOrders(page=1) {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -69,7 +73,8 @@ function getHoldingOrder() {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -85,7 +90,8 @@ function getCancelOrder() {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -101,7 +107,8 @@ function cancelOrder(id) {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -258,7 +265,8 @@ function shortProfitOrLossAnotherUser(page,userName) {
 
       return errr;
     });
-} 
+}
+ 
 export const orderService = {
   user: userSubject.asObservable(),
   get userValue() {

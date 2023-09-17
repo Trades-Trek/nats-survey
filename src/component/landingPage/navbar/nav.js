@@ -34,6 +34,7 @@ const Nav = ({ isSidebarOpen, toggleSideBar }) => {
           <Image
           src='/images/landingPage/logo.png' // Replace with the actual path to your image
           alt='Logo'
+
           // width={100} 
           // height={100} // Set the desired height
           layout='responsive'

@@ -5,6 +5,7 @@ import Router from "next/router";
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
+
 const userSubject = new BehaviorSubject(
   process.browser && localStorage.getItem("token")
 );
@@ -20,13 +21,15 @@ function createGame(data) {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -44,13 +47,15 @@ function updateGame(data, gameId) {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -63,13 +68,15 @@ function getAllGame(search,page=1,limit=5) {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -81,13 +88,15 @@ function getMYGame(search,page=1,limit=5) {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -99,13 +108,15 @@ function joinGame(data) {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -119,13 +130,15 @@ function myRank(data) {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 function allRank(page,limit=10) {
@@ -138,13 +151,15 @@ function allRank(page,limit=10) {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -156,13 +171,15 @@ function deleteGame(id) {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -174,13 +191,15 @@ function portfolioResetting(id) {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 function leaveCompetion(id) {
@@ -191,13 +210,15 @@ function leaveCompetion(id) {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 function inviteGame(data) {
@@ -208,13 +229,15 @@ function inviteGame(data) {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 function inviteFriends(emails) {
@@ -225,13 +248,15 @@ function inviteFriends(emails) {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 function refferalInfo() {
@@ -242,13 +267,15 @@ function refferalInfo() {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -264,7 +291,8 @@ function getWinner(date){
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -276,13 +304,15 @@ function getMYPastGame() {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 
@@ -298,7 +328,8 @@ function getLeaderBoard(gameId){
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
 function getTradeHistory(gameId){
@@ -313,9 +344,11 @@ function getTradeHistory(gameId){
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
 }
+
 export const gameService = {
   user: userSubject.asObservable(),
   get userValue() {

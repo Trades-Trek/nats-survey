@@ -20,15 +20,18 @@ function login(data) {
         localStorage.setItem(authConfig.storageTokenKeyName, res.token)
         Router.replace('/dashboard')
       }
-      return res
+      
+return res
     })
     .catch(error => {
       if (error?.length > 0) {
         return error[0]
       }
-      return error
+      
+return error
     })
 }
+
 //signup function
 function signup(data) {
   return fetchWrapper
@@ -37,13 +40,15 @@ function signup(data) {
     .then(res => {
       if (res.success) {
       }
-      return res
+      
+return res
     })
     .catch(error => {
       if (error?.length > 0) {
         return error[0]
       }
-      return error
+      
+return error
     })
 }
 
@@ -60,7 +65,8 @@ function verifyLoginOtp(email, otp) {
         localStorage.setItem(authConfig.storageTokenKeyName, res.token)
         Router.replace('/dashboard')
       }
-      return res
+      
+return res
     })
     .catch(function (error) {
       return error
@@ -78,12 +84,14 @@ function subscriptionUpdate(email, subscription) {
         userSubject.next(res.token)
         localStorage.setItem('token', res.token)
       }
-      return res
+      
+return res
     })
     .catch(function (error) {
       return error
     })
 }
+
 // forgot password ...................
 function forgot_password(email) {
   return fetchWrapper
@@ -95,7 +103,8 @@ function forgot_password(email) {
         userSubject.next(res.token)
         localStorage.setItem('token', res.token)
       }
-      return res
+      
+return res
     })
     .catch(function (error) {
       return error
@@ -111,12 +120,14 @@ function reset_password(data) {
         userSubject.next(res.token)
         localStorage.setItem('token', res.token)
       }
-      return res
+      
+return res
     })
     .catch(function (error) {
       return error
     })
 }
+
 //Logout Function
 function logout() {
   // remove user from local storage, publish null to user subscribers and redirect to login page
@@ -146,7 +157,8 @@ function userInfo() {
       if (error?.length > 0) {
         return error[0]
       }
-      return error
+      
+return error
     })
 }
 
@@ -162,7 +174,8 @@ function resendOtp(email, otp) {
         userSubject.next(res.token)
         localStorage.setItem('token', res.token)
       }
-      return res
+      
+return res
     })
     .catch(function (error) {
       return error
@@ -179,7 +192,8 @@ function changePassword(data) {
         userSubject.next(res.token)
         localStorage.setItem('token', res.token)
       }
-      return res
+      
+return res
     })
     .catch(function (error) {
       return error
@@ -204,13 +218,15 @@ function GetSingleUser(userName) {
     .then(res => {
       if (res.success) {
       }
-      return res
+      
+return res
     })
     .catch(error => {
       if (error?.length > 0) {
         return error[0]
       }
-      return error
+      
+return error
     })
 }
 

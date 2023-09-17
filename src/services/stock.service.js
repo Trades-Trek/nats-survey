@@ -5,6 +5,7 @@ import Router from 'next/router';
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
+
 const userSubject = new BehaviorSubject(
   process.browser && localStorage.getItem('token')
 );
@@ -16,13 +17,15 @@ function getTopGainer() {
       .then((res) => {
         if (res.success) {
         }
-        return res;
+        
+return res;
       })
       .catch((error) => {
         if (error?.length > 0) {
           return error[0];
         }
-        return error;
+        
+return error;
       });
   }
   function getTopLooser() {
@@ -32,13 +35,15 @@ function getTopGainer() {
       .then((res) => {
         if (res.success) {
         }
-        return res;
+        
+return res;
       })
       .catch((error) => {
         if (error?.length > 0) {
           return error[0];
         }
-        return error;
+        
+return error;
       });
   }
   function getAllStock() {
@@ -48,13 +53,15 @@ function getTopGainer() {
       .then((res) => {
         if (res.success) {
         }
-        return res;
+        
+return res;
       })
       .catch((error) => {
         if (error?.length > 0) {
           return error[0];
         }
-        return error;
+        
+return error;
       });
   }
   function addToWatchListStock(stock) {
@@ -64,13 +71,15 @@ function getTopGainer() {
       .then((res) => {
         if (res.success) {
         }
-        return res;
+        
+return res;
       })
       .catch((error) => {
         if (error?.length > 0) {
           return error[0];
         }
-        return error;
+        
+return error;
       });
   }
   function AllWathchList() {
@@ -80,13 +89,15 @@ function getTopGainer() {
       .then((res) => {
         if (res.success) {
         }
-        return res;
+        
+return res;
       })
       .catch((error) => {
         if (error?.length > 0) {
           return error[0];
         }
-        return error;
+        
+return error;
       });
   }
 
@@ -97,13 +108,15 @@ function getTopGainer() {
     .then((res) => {
       if (res.success) {
       }
-      return res;
+      
+return res;
     })
     .catch((error) => {
       if (error?.length > 0) {
         return error[0];
       }
-      return error;
+      
+return error;
     });
   }
 

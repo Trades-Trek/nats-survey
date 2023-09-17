@@ -35,7 +35,8 @@ const AuthGuard = props => {
   )
   if (auth.loading || auth.user === null) {
     console.log('auth is null or loading')
-    return fallback
+    
+return fallback
   }
 
   return <>{children}</>

@@ -49,11 +49,14 @@ const Login = () => {
   const { setUser } = useContext(AuthContext)
   const [validate, setValidate] = useState(false)
   const [error, setError] = useState()
+
   const [state, setState] = useState({
     password: '',
     showPassword: false
   })
   const [isLoading, setIsLoading] = useState(false)
+
+
   // ** Hook
   const {
     control,

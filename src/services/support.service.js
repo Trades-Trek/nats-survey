@@ -4,6 +4,7 @@ import { fetchWrapper } from '../helpers';
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
+
 const userSubject = new BehaviorSubject(
   process.browser && localStorage.getItem('token')
 );
@@ -15,13 +16,15 @@ function createSupport(data) {
       .then((res) => {
         if (res.success) {
         }
-        return res;
+        
+return res;
       })
       .catch((error) => {
         if (error?.length > 0) {
           return error[0];
         }
-        return error;
+        
+return error;
       });
   }
 
@@ -33,13 +36,15 @@ function createSupport(data) {
       .then((res) => {
         if (res.success) {
         }
-        return res;
+        
+return res;
       })
       .catch((error) => {
         if (error?.length > 0) {
           return error[0];
         }
-        return error;
+        
+return error;
       });
   }
 
