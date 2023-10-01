@@ -16,9 +16,13 @@ const GuestGuard = props => {
     if (!router.isReady) {
       return
     }
-    if (!window.localStorage.getItem(authConfig.storageTokenKeyName)) {
-      router.replace('/')
+
+     // as a guest page you should not have token
+    if (window.localStorage.getItem(authConfig.storageTokenKeyName)) {
+      router.replace('/dashboard')
     }
+
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.route])
   if (auth.loading || (!auth.loading && auth.user !== null)) {

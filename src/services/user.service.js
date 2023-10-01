@@ -64,6 +64,7 @@ function verifyLoginOtp(email, otp) {
         userSubject.next(res.token)
         localStorage.setItem(authConfig.storageTokenKeyName, res.token)
         Router.replace('/dashboard')
+        localStorage.removeItem(authConfig.netsurveyemail);
       }
       
 return res

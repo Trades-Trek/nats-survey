@@ -46,7 +46,7 @@ const schema = yup.object().shape({
 
 const Login = () => {
   // ** States
-  const { setUser } = useContext(AuthContext)
+  const { setUser, setUserBankDetail } = useContext(AuthContext)
   const [validate, setValidate] = useState(false)
   const [error, setError] = useState()
 
@@ -55,7 +55,6 @@ const Login = () => {
     showPassword: false
   })
   const [isLoading, setIsLoading] = useState(false)
-
 
   // ** Hook
   const {
@@ -67,7 +66,7 @@ const Login = () => {
     mode: 'onChange',
     resolver: yupResolver(schema)
   })
-
+ 
   const handleClickShowPassword = () => {
     setState({ ...state, showPassword: !state.showPassword })
   }
@@ -79,12 +78,10 @@ const Login = () => {
       .then(res => {
         if (res?.success === true) {
           setUser(res.user)
+          setUserBankDetail(res.userBankDetails)
           setIsLoading(false)
           setValidate(false)
           setError()
-          
-          
-        
           toast.success('Sign in successfully')
         } else if (res?.success === false && !res.user) {
           setValidate(true)
@@ -92,7 +89,6 @@ const Login = () => {
           setIsLoading(false)
         } else if (res?.success === false && res?.profileStatus === 0) {
           setValidate(true)
-
           setError(res.message)
           setBtnStatus(false)
           setIsLoading(false)
@@ -210,6 +206,7 @@ const Login = () => {
 }
 
 Login.getLayout = page => <BlankLayout>{page}</BlankLayout>
-Login.authGuard = false
+Login.guestGuard = true
+
 
 export default Login

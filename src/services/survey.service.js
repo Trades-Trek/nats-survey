@@ -1,7 +1,6 @@
 import { BehaviorSubject } from "rxjs";
 import getConfig from "next/config";
-import { fetchWrapper } from "../helpers";
-import Router from "next/router";
+import { fetchWrapper } from '../../helpers/fetch-wrapper'
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}`;
@@ -10,13 +9,10 @@ const userSubject = new BehaviorSubject(
   process.browser && localStorage.getItem("token")
 );
 
-function createGame(data) {
-  data.dateRange = `${data.startDate} ${data.endDate}`;
-  data.startingCash = Number(data.startingCash);
-  data.startDate=new Date(data.startDate)
-  
+function createSurvey(data) {
+
   return fetchWrapper
-    .post(`${baseUrl}/game/createGame`, data)
+    .post(`${baseUrl}/surveys`, data)
 
     .then((res) => {
       if (res.success) {
@@ -32,6 +28,49 @@ return res;
 return error;
     });
 }
+
+
+function submitSurvey(data, slug) {
+
+  return fetchWrapper
+    .post(`${baseUrl}/surveys/user/${slug}`, data)
+
+    .then((res) => {
+      if (res.success) {
+      }
+      
+return res;
+    })
+    .catch((error) => {
+      if (error?.length > 0) {
+        return error[0];
+      }
+      
+return error;
+    });
+}
+
+function createBankAccount(data) {
+
+  return fetchWrapper
+    .post(`${baseUrl}/bank`, data)
+
+    .then((res) => {
+      if (res.success) {
+        
+      }
+      
+return res;
+    })
+    .catch((error) => {
+      if (error?.length > 0) {
+        return error[0];
+      }
+      
+return error;
+    });
+}
+
 
 // update game ..........................
 function updateGame(data, gameId) {
@@ -59,11 +98,30 @@ return error;
     });
 }
 
+function getSurvey(slug){
+  return fetchWrapper
+    .get(`${baseUrl}/surveys/${slug}`)
+
+    .then((res) => {
+      if (res.success) {
+      }
+      
+return res;
+    })
+    .catch((error) => {
+      if (error?.length > 0) {
+        return error[0];
+      }
+      
+return error;
+    });
+}
+
 // get all game .....
-function getAllGame(search,page=1,limit=5) {
+function getAllSurveys(search='',page=1,limit=20) {
   // console
   return fetchWrapper
-    .get(`${baseUrl}/game?search=${search}&page=${page}&limit=${limit}`)
+    .get(`${baseUrl}/surveys?search=${search}&page=${page}&limit=${limit}`)
 
     .then((res) => {
       if (res.success) {
@@ -349,13 +407,16 @@ return error;
     });
 }
 
-export const gameService = {
+export const surveyService = {
   user: userSubject.asObservable(),
   get userValue() {
     return userSubject.value;
   },
-  createGame,
-  getAllGame,
+  createSurvey,
+  submitSurvey,
+  createBankAccount,
+  getAllSurveys,
+  getSurvey,
   getMYGame,
   joinGame,
   myRank,

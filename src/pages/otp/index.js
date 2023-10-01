@@ -16,8 +16,15 @@ const otpInputStyle = {
 }
 
 const Otp = () => {
-  const { setUser } = useContext(AuthContext);
   const router = useRouter()
+  let email = localStorage.getItem(authConfig.netsurveyemail)
+  if (!email) {
+    router.push('/signup');
+    return;
+  }
+
+  const { setUser } = useContext(AuthContext);
+
   const [otp, setOpt] = useState('')
   const [error, setError] = useState(null)
   const [emailAddress, setEmailAddress] = useState()
@@ -135,5 +142,4 @@ const Otp = () => {
 
 Otp.getLayout = page => <BlankLayout>{page}</BlankLayout>
 Otp.guestGuard = true
-
 export default Otp

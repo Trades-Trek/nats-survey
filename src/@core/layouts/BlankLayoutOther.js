@@ -1,7 +1,6 @@
 // ** MUI Imports
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
-import * as React from 'react'
 import AppBar from '@mui/material/AppBar'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -15,13 +14,8 @@ import Button from '@mui/material/Button'
 import { userService } from 'src/services'
 import MenuItem from '@mui/material/MenuItem'
 import { AuthContext } from 'src/context/AuthContext'
-
-
+import React, { useContext } from 'react'
 import Hidden from '@mui/material/Hidden'
-
-import { useState, useContext } from 'react'
-
-import Drawer from '@mui/material/Drawer'
 
 // Styled component for Blank Layout component
 const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
@@ -71,7 +65,7 @@ export default BlankLayout
 
 function ResponsiveAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null)
-  const { setUser } = useContext(AuthContext)
+  const { setUser, user } = useContext(AuthContext)
 
   const handleMenu = event => {
     setAnchorEl(event.currentTarget)
@@ -90,8 +84,8 @@ function ResponsiveAppBar() {
         if (route === 'logout') {
           setUser(null)
           userService.logout()
-          
-return
+
+          return
         }
         if (route) router.push(route)
       }}
@@ -104,7 +98,7 @@ return
 
   const RightSideMenu = () => {
     if (currentPageName === '/signup') {
-      return <UniqueButton title='Login' route='login' />
+      return <UniqueButton title='Sign In' route='login' />
     }
 
     if (currentPageName === '/login') {
@@ -112,14 +106,30 @@ return
     }
 
     if (currentPageName === '/otp') {
-      return <UniqueButton title='Login' route='login' />
+      return <UniqueButton title='Sign In' route='login' />
     }
     if (currentPageName === '/') {
-      return <UniqueButton title='Login' route='login' />
+      return <UniqueButton title='Sign In' route='login' />
     }
 
     if (currentPageName === '/dashboard') {
       return <UniqueButton title='Logout' route='logout' />
+    }
+
+    if (currentPageName === '/profile' || currentPageName === '/profile/edit' || currentPageName === '/setup') {
+      return (
+        <>
+          <Button
+            onClick={() => {
+              router.push('/dashboard')
+            }}
+            variant='text'
+          >
+            Home
+          </Button>
+          <UniqueButton title='Sign Out' route='logout' />
+        </>
+      )
     }
 
     return (
@@ -152,7 +162,7 @@ return
     <div>
       <AppBar position='static' style={{ boxShadow: 'none' }}>
         <Toolbar style={appBarStyle}>
-          <div style={{ display: 'flex', alignItems: 'center', height: '200px', width: '200px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', width: '200px' }}>
             <Image
               src='/images/landingPage/logo.png' // Replace with the actual path to your image
               alt='Logo'
@@ -190,9 +200,68 @@ return
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
-              <MenuItem onClick={() => userService.logout()}>Log out</MenuItem>
+              {user ? (
+                <>
+                  {['/profile', '/setup', '/profile/edit'].includes(currentPageName) && (
+                    <>
+                      <MenuItem
+                        onClick={() => {
+                          setAnchorEl(null)
+                          router.push('/dashboard')
+                        }}
+                      >
+                        Home
+                      </MenuItem>
+
+                      <MenuItem
+                        onClick={() => {
+                          setAnchorEl(null)
+                          setUser(null)
+                          userService.logout()
+                        }}
+                      >
+                        Sign out
+                      </MenuItem>
+                    </>
+                  )}
+
+                  {currentPageName === '/dashboard' && (
+                    <>
+                      <MenuItem
+                        onClick={() => {
+                          setAnchorEl(null)
+                          setUser(null)
+                          userService.logout()
+                        }}
+                      >
+                        Sign out
+                      </MenuItem>
+                    </>
+                  )}
+                </>
+              ) : currentPageName === '/signup' ? (
+                <>
+                  <MenuItem
+                    onClick={() => {
+                      setAnchorEl(null)
+                      router.push('/login')
+                    }}
+                  >
+                    Sign In
+                  </MenuItem>
+                </>
+              ) : (
+                <>
+                  <MenuItem
+                    onClick={() => {
+                      setAnchorEl(null)
+                      router.push('/signup')
+                    }}
+                  >
+                    Sign Up
+                  </MenuItem>
+                </>
+              )}
             </Menu>
           </Hidden>
         </Toolbar>

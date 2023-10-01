@@ -3,12 +3,15 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import CardContent from '@mui/material/CardContent'
 import { Typography } from '@mui/material'
 import Router from "next/router";
+import { AuthContext } from 'src/context/AuthContext'
+import React, {  useContext } from 'react'
 
 const CardWrapper = ({ HeaderComponent, title, children }) => {
+  const { user  } = useContext(AuthContext);
   return (
     <Card sx={{ mt: 12, p: 5 }} style={{}}>
       <div>
-        <ArrowBackIcon style={{ cursor: 'pointer' }} onClick={()=>  Router.push('/')} />
+        <ArrowBackIcon style={{ cursor: 'pointer' }} onClick={()=>  Router.push( user ? '/dashboard' : '/')} />
         {HeaderComponent}
       </div>
 

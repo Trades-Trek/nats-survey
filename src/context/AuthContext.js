@@ -14,12 +14,15 @@ const defaultProvider = {
   loading: true,
   setUser: () => null,
   setLoading: () => Boolean,
+  bankDetail: null,
+
 }
 const AuthContext = createContext(defaultProvider)
 
 const AuthProvider = ({ children }) => {
   // ** States
   const [user, setUser] = useState(defaultProvider.user)
+  const [userBankDetail, setUserBankDetail] = useState(defaultProvider.bankDetail)
   const [loading, setLoading] = useState(defaultProvider.loading)
 
   const router = useRouter()
@@ -51,6 +54,7 @@ const AuthProvider = ({ children }) => {
           .then(async response => {
             setLoading(false)
             setUser(response.data.user)
+            setUserBankDetail(response.data.userBankDetails)
           })
           .catch(() => {
             setUser(null)
@@ -71,7 +75,9 @@ const AuthProvider = ({ children }) => {
     user,
     loading,
     setUser,
-    setLoading
+    userBankDetail,
+    setLoading,
+    setUserBankDetail
   }
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>

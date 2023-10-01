@@ -24,7 +24,7 @@ import toast from 'react-hot-toast'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import BlankLayout from 'src/@core/layouts/BlankLayoutOther'
-import { Typography } from '@mui/material'
+import authConfig from 'src/configs/auth'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -115,14 +115,14 @@ const Register = () => {
 
   const onSubmit = data => {
     data.country = data.country.label
+    data.phone  = data.phoneNumber
     userService
       .signup(data)
       .then(res => {
         if (res?.success === true) {
           setValidate(false)
-          localStorage.setItem('net_survey_email', data.email) //why ?
+          localStorage.setItem(authConfig.netsurveyemail, data.email) //why ?
           setError() //look into
-          localStorage.setItem('net_survey_otp', data.email)
           setIsLoading(false)
           router.replace('/otp')
           toast.success('Sign up successful')
@@ -406,6 +406,5 @@ const Register = () => {
 }
 
 Register.getLayout = page => <BlankLayout>{page}</BlankLayout>
-Register.authGuard = false
-
+Register.guestGuard = true
 export default Register
