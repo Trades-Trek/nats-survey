@@ -27,86 +27,87 @@ const NoSurveyAvailable = () => {
 
 const Dashboard = () => {
   const [surveys, setSurveys] = useState([])
-  const [isLoading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(true)
   const { userBankDetail } = useContext(AuthContext)
 
   useEffect(() => {
-    // Fetch surveys when the component mounts
     const fetchSurveys = async () => {
       try {
-        const response = await surveyService.getAllSurveys()
+        const response = await surveyService.getAllSurveys();
         if (response.success) {
-          setSurveys(response.data)
+          setSurveys(response.data);
         } else {
-          toast.error('Error while fetching surveys')
+         toast.error('Error while fetching surveys')
         }
-        setLoading(false)
       } catch (error) {
-        setLoading(false)
         toast.error('Error while fetching surveys')
+      } finally {
+        setLoading(false);
       }
-    }
+    };
 
-    fetchSurveys()
-  }, [])
+    fetchSurveys();
+  }, []);
+
+  if (isLoading && !surveys.length) {
+    return <Spinner />;
+  }
 
   return (
     <Grid
-      container
-      style={{ position: 'relative' }}
-      spacing={6}
-      sx={{ marginTop: 10, background: 'white', padding: 10 }}
-    >
-      {isLoading ? (
-        <Spinner />
-      ) : (
+    container
+    style={{ position: 'relative' }}
+    spacing={6}
+    sx={{ marginTop: 10, background: 'white', padding: 10 }}
+  >
+    {!userBankDetail && (
+      <CardImgTop
+        position="sticky"
+        style={{
+          top: -60,
+          position: 'absolute',
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
+        sx={{ width: 395, height: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      >
+        <Link href="/setup">
+          <AccountBalanceIcon style={{ height: '12px' }} />
+          <span>Setup your bank detail</span>
+        </Link>
+      </CardImgTop>
+    )}
+
+    <div style={{ textAlign: 'center', width: '100%' }}>
+      {surveys.length > 0 ? (
         <>
-          {!userBankDetail && (
-            <Card
-              position='sticky'
-              style={{ top: -60, position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}
-              sx={{ width: 395, height: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-            >
-              <Link href='/setup'>
-                {' '}
-                <AccountBalanceIcon style={{ height: '12px' }} />
-                <span>Setup your bank detail</span>{' '}
-              </Link>
-            </Card>
-          )}
-          <div style={{ textAlign: 'center', width: '100%' }}>
-            {surveys.length > 0 ? (
-              <>
-                <Typography variant='h4' gutterBottom>
-                  Take 5 minute survey
-                </Typography>
+          <Typography variant="h4" gutterBottom>
+            Take 5 minute survey
+          </Typography>
 
-                <Typography variant='subtitle1' gutterBottom>
-                  Take survey from
-                </Typography>
-              </>
-            ) : (
-              <NoSurveyAvailable />
-            )}
-          </div>
-          <Grid container spacing={6}>
-            {surveys.map(survey => (
-              <Grid key={survey._id} item xs={12} sm={6} md={4}>
-                <CardImgTop
-                  title={survey.title}
-                  description={survey.description}
-                  id={survey._id}
-                  slug={survey.slug}
-                  questions={survey.questions}
-
-                  // Add other props for CardImgTop as needed
-                />
-              </Grid>
-            ))}
-          </Grid>
+          <Typography variant="subtitle1" gutterBottom>
+            Take survey from
+          </Typography>
         </>
+      ) : (
+        <NoSurveyAvailable />
       )}
+    </div>
+
+    <Grid container spacing={6}>
+      {surveys.map((survey) => (
+        <Grid key={survey._id} item xs={12} sm={6} md={4}>
+          <CardImgTop
+            title={survey.title}
+            description={survey.description}
+            id={survey._id}
+            slug={survey.slug}
+            questions={survey.questions}
+          />
+        </Grid>
+      ))}
     </Grid>
+  </Grid>
   )
 }
 

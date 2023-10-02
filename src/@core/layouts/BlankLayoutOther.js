@@ -67,7 +67,7 @@ export default BlankLayout
 
 function ResponsiveAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null)
-  const { setUser, user } = useContext(AuthContext)
+  const { setUser, user, setUserBankDetail, setTotalSurveyBalance,setTotalReferralBalance } = useContext(AuthContext)
 
   const handleMenu = event => {
     setAnchorEl(event.currentTarget)
@@ -80,13 +80,20 @@ function ResponsiveAppBar() {
   const router = useRouter()
   const currentPageName = router.pathname
 
+ const clearStateUponLogout = () => {
+  setUser(null)
+  setTotalSurveyBalance(0)
+  setTotalReferralBalance(0)
+  setUserBankDetail(null)
+ }
+
+ 
+
   const UniqueButton = ({ title, route }) => (
     <Button
       onClick={() => {
         if (route === 'logout') {
-          setUser(null)
-          userService.logout()
-
+          userService.logout(clearStateUponLogout)
           return
         }
         if (route) router.push(route)
@@ -254,8 +261,7 @@ function ResponsiveAppBar() {
                       <MenuItem
                         onClick={() => {
                           setAnchorEl(null)
-                          setUser(null)
-                          userService.logout()
+                          userService.logout(clearStateUponLogout)
                         }}
                       >
                         Sign out
@@ -268,8 +274,7 @@ function ResponsiveAppBar() {
                       <MenuItem
                         onClick={() => {
                           setAnchorEl(null)
-                          setUser(null)
-                          userService.logout()
+                          userService.logout(clearStateUponLogout)
                         }}
                       >
                         Sign out

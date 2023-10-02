@@ -130,12 +130,13 @@ return res
 }
 
 //Logout Function
-function logout() {
+function logout(clearStateUponLogout) {
   // remove user from local storage, publish null to user subscribers and redirect to login page
   localStorage.removeItem(authConfig.storageTokenKeyName)
   localStorage.removeItem(authConfig.netsurveyemail)
   localStorage.removeItem('otp')
   userSubject.next(null)
+  clearStateUponLogout()
   Router.push('/')
 }
 

@@ -10,7 +10,7 @@ import ListItemText from '@mui/material/ListItemText'
 
 const Profile = () => {
   const { userBankDetail, user } = useContext(AuthContext)
-  const bankAccount = userBankDetail[0]
+  const bankAccount = userBankDetail?.[0];
 
   return (
     <CardWrapper HeaderComponent={<></>} title={''}>
@@ -40,15 +40,21 @@ const Profile = () => {
           </Typography>
         </Box>
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-          {[
-            { key: 'Bank Name', value: bankAccount.bankName },
-            { key: 'Account Number', value: bankAccount.accountNumber },
-            { key: 'Account Name', value: bankAccount.accountName },
-          ].map((value, index) => (
-            <ListItem key={index + 1} disableGutters secondaryAction={<p>{value.value}</p>}>
-              <ListItemText primary={`${value.key}`} />
+          {bankAccount ? (
+            [
+              { key: 'Bank Name', value: bankAccount.bankName },
+              { key: 'Account Number', value: bankAccount.accountNumber },
+              { key: 'Account Name', value: bankAccount.accountName },
+            ].map((value, index) => (
+              <ListItem key={index + 1} disableGutters secondaryAction={<p>{value.value}</p>}>
+                <ListItemText primary={`${value.key}`} />
+              </ListItem>
+            ))
+          ) : (
+            <ListItem>
+              <ListItemText primary='Bank account details not available' />
             </ListItem>
-          ))}
+          )}
         </List>
 
         <Button

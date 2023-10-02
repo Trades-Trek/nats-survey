@@ -5,12 +5,12 @@ import CardWrapper from 'src/component/Cardwrapper'
 import BlankLayout from 'src/@core/layouts/BlankLayoutOther'
 import { FormControl, InputLabel, Input, Button, FormHelperText } from '@mui/material'
 import { surveyService } from 'src/services/survey.service'
+import TextField from '@mui/material/TextField'
 import Router from 'next/router'
 
 const EditProfile = () => {
-
-  const { userBankDetail, user, setUserBankDetail } = useContext(AuthContext);
-  const bankAccount = userBankDetail[0];
+  const { userBankDetail, user, setUserBankDetail } = useContext(AuthContext)
+  const bankAccount = userBankDetail?.[0]
 
   const [profileData, setProfileData] = useState({
     name: user.name,
@@ -18,22 +18,21 @@ const EditProfile = () => {
     email: user.email,
     phone: user.phone,
     country: user.country,
-    bankName: bankAccount.bankName,
-    accountName: bankAccount.accountName,
-    accountNumber: bankAccount.accountNumber,
-  });
-  const [isLoading, setIsLoading] = useState(false);
+    bankName: bankAccount?.bankName || '',
+    accountName: bankAccount?.accountName || '',
+    accountNumber: bankAccount?.accountNumber || ''
+  })
+  const [isLoading, setIsLoading] = useState(false)
 
-  const { country, bankName,}  =  profileData
-
-
-  console.log(profileData, '....profileData.....')
+  const { country, bankName, name, email, phone, username } = profileData
 
   const [errors, setErrors] = useState({
     country: '',
     bankName: '',
     accountNumber: '',
-    accountName: ''
+    accountName: '',
+    name: '',
+    phone: ''
   })
 
   const validateForm = () => {
@@ -43,16 +42,26 @@ const EditProfile = () => {
       newErrors.country = 'Country is required.'
     }
 
-    if (!bankName) {
-      newErrors.bankName = 'Bank name is required.'
+    if (!name) {
+      newErrors.name = 'Name is required.'
     }
 
-    if (!accountNumber) {
-      newErrors.accountNumber = 'Account number is required.'
+    if (!phone) {
+      newErrors.phone = 'Phone number is required.'
     }
 
-    if (!accountName) {
-      newErrors.accountName = 'Account name is required.'
+    if (userBankDetail) {
+      if (!bankName) {
+        newErrors.bankName = 'Bank name is required.'
+      }
+
+      if (!accountNumber) {
+        newErrors.accountNumber = 'Account number is required.'
+      }
+
+      if (!accountName) {
+        newErrors.accountName = 'Account name is required.'
+      }
     }
 
     setErrors(newErrors)
@@ -90,46 +99,61 @@ const EditProfile = () => {
   }
 
   return (
-    <CardWrapper
-      HeaderComponent={<></>}
-      title='profile'
-    >
-      
-        <form onSubmit={handleSubmit}>
-          <FormControl margin='normal' fullWidth>
-            <InputLabel htmlFor='country'>Country</InputLabel>
-            <Input id='country' type='text' value={country} onChange={e => setCountry(e.target.value)} />
-            <FormHelperText error={errors.country}>{errors.country}</FormHelperText>
-          </FormControl>
+    <CardWrapper HeaderComponent={<></>} title='profile'>
+      <form onSubmit={handleSubmit}>
+        <TextField disabled  fullWidth id='outlined-disabled' label='' defaultValue={username}  />
+        
+        <TextField fullWidth disabled id='outlined-disabled' label='' defaultValue={email} sx={{ my: 5}}/>
 
-          <FormControl margin='normal' fullWidth>
-            <InputLabel htmlFor='bankName'>Bank Name</InputLabel>
-            <Input id='bankName' type='text' value={bankName} onChange={e => setBankName(e.target.value)} />
-            <FormHelperText error={errors.bankName}>{errors.bankName}</FormHelperText>
-          </FormControl>
+        <FormControl margin='normal' fullWidth>
+          <InputLabel htmlFor='country'>Country</InputLabel>
+          <Input
+            id='country'
+            type='text'
+            value={country}
+            // onChange={e => setCountry(e.target.value)}
+          />
+          <FormHelperText error={errors.country}>{errors.country}</FormHelperText>
+        </FormControl>
 
-          <FormControl margin='normal' fullWidth>
-            <InputLabel htmlFor='accountNumber'>Account Number</InputLabel>
-            <Input
-              id='accountNumber'
-              type='text'
-              value={  profileData.accountNumber}
-              onChange={e => setAccountNumber(e.target.value)}
-            />
-            <FormHelperText error={errors.accountNumber}>{errors.accountNumber}</FormHelperText>
-          </FormControl>
+        {userBankDetail && (
+          <>
+            <FormControl margin='normal' fullWidth>
+              <InputLabel htmlFor='bankName'>Bank Name</InputLabel>
+              <Input id='bankName' type='text' value={bankName} 
+              // onChange={e => setBankName(e.target.value)} 
+              
+              />
+              <FormHelperText error={errors.bankName}>{errors.bankName}</FormHelperText>
+            </FormControl>
 
-          <FormControl margin='normal' fullWidth>
-            <InputLabel htmlFor='accountName'>Account Name</InputLabel>
-            <Input id='accountName' type='text' value={profileData.accountName} onChange={e => setAccountName(e.target.value)} />
-            <FormHelperText error={errors.accountName}>{errors.accountName}</FormHelperText>
-          </FormControl>
+            <FormControl margin='normal' fullWidth>
+              <InputLabel htmlFor='accountNumber'>Account Number</InputLabel>
+              <Input
+                id='accountNumber'
+                type='text'
+                value={profileData.accountNumber}
+                // onChange={e => setAccountNumber(e.target.value)}
+              />
+              <FormHelperText error={errors.accountNumber}>{errors.accountNumber}</FormHelperText>
+            </FormControl>
 
-          <Button disabled={isLoading} type='submit' variant='contained' style={{ background: '#FF8C09' }}>
-            {isLoading ? 'Loading...' : ' Save and preview'}
-          </Button>
-        </form>
-      
+            <FormControl margin='normal' fullWidth>
+              <InputLabel htmlFor='accountName'>Account Name</InputLabel>
+              <Input
+                id='accountName'
+                type='text'
+                value={profileData.accountName}
+                // onChange={e => setAccountName(e.target.value)}
+              />
+              <FormHelperText error={errors.accountName}>{errors.accountName}</FormHelperText>
+            </FormControl>
+          </>
+        )}
+        <Button disabled type='submit' variant='contained' style={{ background: '#FF8C09' }}>
+          {isLoading ? 'Loading...' : ' Save and preview'}
+        </Button>
+      </form>
     </CardWrapper>
   )
 }
