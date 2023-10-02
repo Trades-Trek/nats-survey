@@ -17,6 +17,8 @@ import { AuthContext } from 'src/context/AuthContext'
 import React, { useContext } from 'react'
 import Hidden from '@mui/material/Hidden'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
+
+
 // Styled component for Blank Layout component
 const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
   height: '100vh',

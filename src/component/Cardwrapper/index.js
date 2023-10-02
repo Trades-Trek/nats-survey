@@ -8,7 +8,8 @@ import React, {  useContext } from 'react'
 
 const CardWrapper = ({ HeaderComponent, title, children }) => {
   const { user  } = useContext(AuthContext);
-  return (
+  
+return (
     <Card sx={{ mt: 12, p: 5 }} style={{}}>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 25}}>
         <ArrowBackIcon style={{ cursor: 'pointer' }} onClick={()=>  Router.push( user ? '/dashboard' : '/')} />

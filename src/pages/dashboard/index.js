@@ -98,6 +98,7 @@ const Dashboard = () => {
                   id={survey._id}
                   slug={survey.slug}
                   questions={survey.questions}
+
                   // Add other props for CardImgTop as needed
                 />
               </Grid>

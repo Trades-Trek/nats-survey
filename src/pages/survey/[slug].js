@@ -36,6 +36,7 @@ const Questions = () => {
     )
     router.push('/dashboard')
   }
+
   const handleNextQuestion = () => {
     setCurrentResponse('')
     setCurrentQuestion(currentQuestion + 1)
@@ -62,7 +63,8 @@ const Questions = () => {
           setUserResponse(userResponse)
           setCurrentResponse(currentSelectedResponse)
         }
-        return
+        
+return
       }
       setSurveyLoading(false)
       toast.error('Failed to get survey')
@@ -126,7 +128,8 @@ const Questions = () => {
         toast.success('Response to survey submitted')
         setSubmitLoading(false)
         router.push('/success/survey')
-        return
+        
+return
       }
       setSubmitLoading(false)
       toast.error(response.message || 'Error while sumbitting, Try again')

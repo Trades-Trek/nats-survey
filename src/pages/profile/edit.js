@@ -11,6 +11,7 @@ const EditProfile = () => {
 
   const { userBankDetail, user, setUserBankDetail } = useContext(AuthContext);
   const bankAccount = userBankDetail[0];
+
   const [profileData, setProfileData] = useState({
     name: user.name,
     username: user.username,

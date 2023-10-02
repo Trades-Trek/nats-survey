@@ -16,7 +16,8 @@ const buttonStyle = {
 
 const CardImgTop = ({ title, description, slug, questions }) => {
   const router = useRouter()
-  return (
+  
+return (
     <Card>
       <CardMedia sx={{ height: '14.5625rem' }} image='/images/landingPage/amazon.png' />
       <CardContent>

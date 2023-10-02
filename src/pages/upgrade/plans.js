@@ -54,7 +54,8 @@ const SubList = () => (
 
 const SubscriptionCard = ({ title, price, features, upgradeButtonHref }) => {
     const router = useRouter()
-  return (
+  
+return (
     <Grid item xs={12} sm={6} md={4}>
       <Box
         sx={{
@@ -91,7 +92,8 @@ const SubscriptionCard = ({ title, price, features, upgradeButtonHref }) => {
 const UpgradePlans = () => {
 
   const isMobile = useMediaQuery('(max-width: 900px)')
-  return (
+  
+return (
     <CardWrapper HeaderComponent={<></>} title=''>
       <Grid container spacing={isMobile ? 2 : 4}>
         <SubscriptionCard

@@ -17,11 +17,6 @@ const otpInputStyle = {
 
 const Otp = () => {
   const router = useRouter()
-  let email = localStorage.getItem(authConfig.netsurveyemail)
-  if (!email) {
-    router.push('/signup');
-    return;
-  }
 
   const { setUser } = useContext(AuthContext);
 
@@ -32,7 +27,14 @@ const Otp = () => {
   const [isLoaderActive, setLoaderStatus] = useState(false)
 
   useEffect(() => {
+
     let email = localStorage.getItem(authConfig.netsurveyemail)
+    if (!email) {
+      router.push('/signup');
+      
+  return;
+    }
+
     if (email) {
       setEmailAddress(email)
     }
@@ -142,4 +144,5 @@ const Otp = () => {
 
 Otp.getLayout = page => <BlankLayout>{page}</BlankLayout>
 Otp.guestGuard = true
+
 export default Otp

@@ -40,11 +40,13 @@ const defaultValues = {
   standardPrice: '',
   premiumPrice: ''
 }
+
 const CreateSurveyForm = () => {
   const [survey, setSurvey] = useState(defaultValues)
   const [isLoading, setIsLoading] = useState(false)
   const [switchToCreateQuestions, setSwitchToCreateQuestions] = useState(false)
   const [questionsState, setQuestionsState] = useState([])
+
   const {
     control,
     reset,

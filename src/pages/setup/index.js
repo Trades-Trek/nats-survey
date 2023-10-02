@@ -15,6 +15,7 @@ const BankAccount = () => {
   const [bankName, setBankName] = useState('')
   const [accountNumber, setAccountNumber] = useState('')
   const [accountName, setAccountName] = useState('')
+
   const [errors, setErrors] = useState({
     country: '',
     bankName: '',
