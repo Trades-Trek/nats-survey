@@ -18,9 +18,10 @@ import {
   Grid,
   Button
 } from '@chakra-ui/react'
+
 import section2Image from 'public/images/landingPage/section2Image.png'
-import { howItWorks } from './data'
-import { faq } from './data'
+import { howItWorks } from './data';
+import { faq } from './data';
 import plus from 'public/images/landingPage/plus.svg'
 import amazon from 'public/images/landingPage/amazon.svg'
 import visa from 'public/images/landingPage/visa.svg'
