@@ -1,5 +1,8 @@
-import React from 'react';
-import Header from './header';
+import React from 'react'
+import Header from './header'
+import HowItWorks from 'src/component/landingPage/howitworks'
+import Companies from 'src/component/landingPage/companies'
+
 import {
   Box,
   Flex,
@@ -13,21 +16,21 @@ import {
   UnorderedList,
   ListItem,
   Grid,
-  Button,
-} from '@chakra-ui/react';
-import section2Image from 'public/images/landingPage/section2Image.png';
-import { howItWorks } from './data';
-import { faq } from './data';
-import plus from 'public/images/landingPage/plus.svg';
-import amazon from "public/images/landingPage/amazon.svg"
-import visa from 'public/images/landingPage/visa.svg';
-import ebay from 'public/images/landingPage/ebay.svg';
-import expedia from 'public/images/landingPage/expedia.svg';
-import square from 'public/images/landingPage/square.svg';
-import connect from 'public/images/landingPage/connect.svg';
-import bicycle from 'public/images/landingPage/bicycle.svg';
-import Footer from './footer';
-
+  Button
+} from '@chakra-ui/react'
+import section2Image from 'public/images/landingPage/section2Image.png'
+import { howItWorks } from './data'
+import { faq } from './data'
+import plus from 'public/images/landingPage/plus.svg'
+import amazon from 'public/images/landingPage/amazon.svg'
+import visa from 'public/images/landingPage/visa.svg'
+import ebay from 'public/images/landingPage/ebay.svg'
+import expedia from 'public/images/landingPage/expedia.svg'
+import square from 'public/images/landingPage/square.svg'
+import connect from 'public/images/landingPage/connect.svg'
+import bicycle from 'public/images/landingPage/bicycle.svg'
+import Footer from './footer'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
 function LandingPage() {
   return (
@@ -71,10 +74,9 @@ function LandingPage() {
               mt={{ base: '1rem', lg: '2rem' }}
               ml={{ base: '1rem', lg: '0' }}
             >
-              Our platform connects you with exciting survey opportunities that
-              allow you to share your thoughts on a wide range of topics. By
-              participating in surveys, you not only contribute to shaping the
-              future but also earn rewards for your time and insights.
+              Our platform connects you with exciting survey opportunities that allow you to share your thoughts on a
+              wide range of topics. By participating in surveys, you not only contribute to shaping the future but also
+              earn rewards for your time and insights.
             </Text>
           </Box>
         </Flex>
@@ -82,64 +84,13 @@ function LandingPage() {
         {/*******************************how it works section***************************************** */}
 
         <Box textAlign={'center'} backgroundColor={'white'}>
-          <Text
-            fontSize={{ base: '1.5rem', lg: '2.25rem' }}
-            fontWeight={{ base: '600', lg: '800' }}
-            letterSpacing={{ base: ' 0.1125rem', lg: '0.16875rem' }}
-            lineHeight={{ base: '1.90775rem', lg: '2.86156rem' }}
-            mt={{ base: '2.75rem', lg: '9.06rem' }}
-            mb={{ base: '1rem', lg: '0.5rem' }}
-          >
-            How It Works
-          </Text>
-          <Text
-            id='how-it-works'
-            fontSize={{ base: '1rem', lg: '1.5rem' }}
-            fontWeight={{ base: '400', lg: '400' }}
-            letterSpacing={{ base: '0.055rem', lg: '0.0825rem' }}
-            lineHeight={{ base: '1.28681rem', lg: '1.93025rem ' }}
-            w={{ base: '17rem', lg: '30rem' }}
-            m={'auto'}
-          >
-            Step-by-step guide on how users can participate in surveys and earn
-            money
-          </Text>
           <Flex
             justifyContent={'space-around'}
             mt={'3.88rem'}
             flexDirection={{ base: 'column', lg: 'row' }}
             mb={{ base: '0rem', lg: '9.06rem' }}
           >
-            {howItWorks.map((item, index) => (
-              <Box key={index} mb={{ base: '3rem', lg: '0' }}>
-                <Image
-                  src={item.Image}
-                  w={{ base: '5.21281rem', lg: '7.73813rem' }}
-                  height={{ base: '5.39875rem', lg: '8.01419rem' }}
-                  ml={{ base: 'auto', lg: '1.5rem' }}
-                  mr={{ base: 'auto', lg: '0' }}
-                />
-                <Text
-                  fontSize={{ base: '1.6875rem', lg: '3.25rem' }}
-                  fontWeight={{ base: '800', lg: '800' }}
-                  letterSpacing={{ base: '0.12656rem;', lg: '0.24375rem' }}
-                >
-                  {item.steps}
-                </Text>
-                <Text
-                  fontSize={{ base: '1rem', lg: '1.5rem' }}
-                  fontWeight={{ base: '400', lg: '400' }}
-                  letterSpacing={{ base: '0.055rem', lg: '0.0825rem' }}
-                  width={{
-                    base: index === howItWorks.length - 1 ? '40%' : '100%',
-                    lg: index === howItWorks.length - 1 ? '15rem' : '10rem',
-                  }}
-                  m={{ base: 'auto', lg: '0' }}
-                >
-                  {item.text}
-                </Text>
-              </Box>
-            ))}
+            <HowItWorks />
           </Flex>
         </Box>
 
@@ -158,14 +109,7 @@ function LandingPage() {
             Frequently Asked Question
           </Text>
 
-          <Accordion
-            allowToggle
-            w={{ base: '20rem', lg: '45rem' }}
-            m={'auto'}
-            color={'black'}
-            mt={'2rem'}
-            pb={'4rem'}
-          >
+          <Accordion allowToggle w={{ base: '20rem', lg: '45rem' }} m={'auto'} color={'black'} mt={'2rem'} pb={'4rem'}>
             {faq.map((item, index) => (
               <>
                 <AccordionItem key={index} mt={'1rem'}>
@@ -175,11 +119,11 @@ function LandingPage() {
                       borderRadius={'4.9375rem'}
                       p={{ base: '0.875rem 1.5625rem', lg: '1rem 4.6875rem' }}
                     >
-                      <Text as="span" flex="1" textAlign="left">
+                      <Text as='span' flex='1' textAlign='left'>
                         {item.title}
                       </Text>
                       {/* <AccordionIcon /> */}
-                      <Image src={plus} />
+                      <AddCircleOutlineIcon />
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
@@ -190,7 +134,7 @@ function LandingPage() {
 
                     <UnorderedList pl={4} spacing={2} paddingBlock={'1rem'}>
                       {item.list.map((item, index) => {
-                        return <ListItem key={index}>{item}</ListItem>;
+                        return <ListItem key={index}>{item}</ListItem>
                       })}
                     </UnorderedList>
                   </AccordionPanel>
@@ -213,9 +157,10 @@ function LandingPage() {
             m={'auto'}
             pt={{ base: '4rem', lg: '9.5rem' }}
           >
-            We Work with Some of the Most Respected Research Firms in the
-            Industry
+            We Work with Some of the Most Respected Research Firms in the Industry
           </Text>
+
+   
           <Flex
             justifyContent={'space-around'}
             gap={'3.94rem'}
@@ -225,12 +170,13 @@ function LandingPage() {
             m={'auto'}
             mb={'8rem'}
           >
-            <Image src={amazon} alt="Amazon" />
+            {/* <Image src={amazon} alt="Amazon" />
             <Image src={visa} alt="Visa" />
             <Image src={ebay} alt="ebay" />
-            <Image src={expedia} alt="Expedia" />
+            <Image src={expedia} alt="Expedia" /> */}
+                  <Companies />
           </Flex>
-          <Grid
+          {/* <Grid
             display={{ base: 'grid', lg: 'none' }}
             gridTemplateColumns={'1fr 1fr'}
             width={'80%'}
@@ -242,7 +188,7 @@ function LandingPage() {
             <Image src={square} alt="square" />
             <Image src={connect} alt="connect" />
             <Image src={bicycle} alt="bicycle" />
-          </Grid>
+          </Grid> */}
         </Box>
 
         {/**********************************************************************your reward********************************************************/}
@@ -250,7 +196,7 @@ function LandingPage() {
         <Box
           background={{
             base: '#10393B',
-            lg: '#E6F2F2',
+            lg: '#E6F2F2'
           }}
           w={{ base: '100%', lg: '100%' }}
           h={{ base: '95%', lg: 'auto' }}
@@ -268,13 +214,7 @@ function LandingPage() {
           >
             Your next reward is just a few clicks away!{' '}
           </Text>
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            mt={'2rem'}
-            pb={'3rem'}
-          >
+          <Box display='flex' justifyContent='center' alignItems='center' mt={'2rem'} pb={'3rem'}>
             <Button
               background={'#FF8C09'}
               borderRadius={'0.3125rem'}
@@ -287,11 +227,11 @@ function LandingPage() {
             </Button>
           </Box>
         </Box>
-{/********************************************************************** footer **********************************************************/}
-              <Footer/>
+        {/********************************************************************** footer **********************************************************/}
+        <Footer />
       </Box>
     </>
-  );
+  )
 }
 
-export default LandingPage;
+export default LandingPage

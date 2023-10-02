@@ -5,8 +5,10 @@ import headerImage from 'public/images/landingPage/headerImage.png';
 import circle from 'public/images/landingPage/circle.svg';
 import line from 'public/images/landingPage/line.svg';
 import mobileHeaderImage from "public/images/landingPage/mobileHeaderImage.png"
+import { useRouter } from 'next/router'
 
 function Header() {
+   const router = useRouter()
   return (
     <>
       <Box
@@ -49,6 +51,9 @@ function Header() {
               h={'3.5625rem'}
               background={'#FF8C09'}
               color={{ base: 'black', md: '', lg: 'white' }}
+              onClick={()=> {
+                router.push('/signup')
+              }}
             >
               Get Started Today
             </Button>

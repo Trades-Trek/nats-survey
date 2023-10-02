@@ -9,8 +9,6 @@ import React, { useState, useEffect, useContext } from 'react'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import { AuthContext } from 'src/context/AuthContext'
 
-// ** Demo Components Imports
-import CardUser from 'src/views/ui/cards/basic/CardUser'
 import CardImgTop from 'src/views/ui/cards/basic/CardImgTop'
 import toast from 'react-hot-toast'
 import Spinner from 'src/@core/components/spinner'

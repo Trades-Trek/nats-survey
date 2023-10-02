@@ -46,7 +46,7 @@ const schema = yup.object().shape({
 
 const Login = () => {
   // ** States
-  const { setUser, setUserBankDetail } = useContext(AuthContext)
+  const { setUser, setUserBankDetail, setTotalSurveyBalance, setTotalReferralBalance } = useContext(AuthContext)
   const [validate, setValidate] = useState(false)
   const [error, setError] = useState()
 
@@ -79,6 +79,8 @@ const Login = () => {
         if (res?.success === true) {
           setUser(res.user)
           setUserBankDetail(res.userBankDetails)
+          setTotalSurveyBalance(res.totalBalance)
+          setTotalReferralBalance(res.totalRefferalBalance)
           setIsLoading(false)
           setValidate(false)
           setError()

@@ -114,8 +114,11 @@ const Register = () => {
   }
 
   const onSubmit = data => {
+    setIsLoading(true)
+    const referral = router.query?.referral;
     data.country = data.country.label
     data.phone  = data.phoneNumber
+    data.refferalCode = referral ? referral : ''
     userService
       .signup(data)
       .then(res => {

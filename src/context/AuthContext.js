@@ -15,6 +15,10 @@ const defaultProvider = {
   setUser: () => null,
   setLoading: () => Boolean,
   bankDetail: null,
+  totalSurvBalance: 0,
+  setTotalSurvBalance: () => null,
+  totalRefferalBalance:0,
+  setTotalRefferalBalance: () => null,
 
 }
 const AuthContext = createContext(defaultProvider)
@@ -22,25 +26,14 @@ const AuthContext = createContext(defaultProvider)
 const AuthProvider = ({ children }) => {
   // ** States
   const [user, setUser] = useState(defaultProvider.user)
+  const [totalSurveyBalance, setTotalSurveyBalance] = useState(0)
   const [userBankDetail, setUserBankDetail] = useState(defaultProvider.bankDetail)
   const [loading, setLoading] = useState(defaultProvider.loading)
-
+  const [totalReferralBalance, setTotalReferralBalance] = useState(0)
   const router = useRouter()
   useEffect(() => {
     const initAuth = async () => {
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-
-      // if (!storedToken) {
-      //   // // no token in local storage
-
-      //   if (router.asPath !== '/') {
-      //     //not on the landing page
-      //     router.replace({
-      //       pathname: '/login', //redirect to login page
-      //       query: { returnUrl: router.asPath }
-      //     })
-      //   }
-      // }
 
       if (storedToken) {
         if (router.asPath === '/') {
@@ -55,6 +48,8 @@ const AuthProvider = ({ children }) => {
             setLoading(false)
             setUser(response.data.user)
             setUserBankDetail(response.data.userBankDetails)
+            setTotalSurveyBalance(response.data.totalBalance)
+            setTotalReferralBalance(response.data.totalRefferalBalance)
           })
           .catch(() => {
             setUser(null)
@@ -77,7 +72,11 @@ const AuthProvider = ({ children }) => {
     setUser,
     userBankDetail,
     setLoading,
-    setUserBankDetail
+    setUserBankDetail,
+    totalSurveyBalance, 
+    setTotalSurveyBalance,
+    totalReferralBalance, 
+    setTotalReferralBalance
   }
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>

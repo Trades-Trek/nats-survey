@@ -23,22 +23,22 @@ export const howItWorks = [
 export const faq = [
   {
     title: 'How does it work?',
-    list: ['hello. ', 'hello. ', 'hello. ', 'hello. ', 'hello. '],
+    list: ['', '', ''],
   },
   {
     title: 'What kind of surveys will I be taking?',
-    list: ['hello. ', 'hello. ', 'hello. ', 'hello. ', 'hello. '],
+    list: ['', '', ''],
   },
   {
     title: 'How do I earn rewards?',
-    list: ['hello. ', 'hello. ', 'hello. ', 'hello. ', 'hello. '],
+    list: ['', '', ''],
   },
   {
     title: 'When and how will I receive my rewards?',
-    list: ['hello. ', 'hello. ', 'hello. ', 'hello. ', 'hello. '],
+    list: ['', '', ''],
   },
   {
     title: 'Is my information safe and private?',
-    list: ['hello. ', 'hello. ', 'hello. ', 'hello. ', 'hello. '],
+    list: ['', '', ''],
   },
 ];

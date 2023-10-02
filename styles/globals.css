@@ -23,14 +23,15 @@ code[class*='language-'] {
   padding: 0;
 }
 
-.otp--input div{
+.otp--input div {
   margin-bottom: 30px;
   margin-top: 20px;
 }
 
-.otp--input input{
+.otp--input input {
   width: 5em !important;
   height: 5em !important;
-  border: 1px solid #CBCBCB;
+  border: 1px solid #cbcbcb;
   border-radius: 10px;
 }
+

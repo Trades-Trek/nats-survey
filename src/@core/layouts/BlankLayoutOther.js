@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem'
 import { AuthContext } from 'src/context/AuthContext'
 import React, { useContext } from 'react'
 import Hidden from '@mui/material/Hidden'
-
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 // Styled component for Blank Layout component
 const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
   height: '100vh',
@@ -132,10 +132,35 @@ function ResponsiveAppBar() {
       )
     }
 
+    if (
+      currentPageName === '/survey/[slug]' ||
+      currentPageName === '/success/survey' ||
+      currentPageName === '/upgrade/plans'
+    ) {
+      return (
+        <>
+          <Button
+            onClick={() => {
+              router.push('/dashboard')
+            }}
+            variant='text'
+          >
+            Home
+          </Button>
+
+          <AccountCircleOutlinedIcon
+            onClick={() => {
+              router.push('/profile')
+            }}
+            style={{ verticalAlign: 'middle', cursor: 'pointer' }}
+          />
+        </>
+      )
+    }
+
     return (
       <>
         {' '}
-        <UniqueButton title='Hello world' />
         <IconButton
           size='large'
           aria-label='account of current user'
@@ -202,7 +227,7 @@ function ResponsiveAppBar() {
             >
               {user ? (
                 <>
-                  {['/profile', '/setup', '/profile/edit'].includes(currentPageName) && (
+                  {['/profile', '/setup', '/profile/edit', '/survey/[slug]'].includes(currentPageName) && (
                     <>
                       <MenuItem
                         onClick={() => {
@@ -212,6 +237,17 @@ function ResponsiveAppBar() {
                       >
                         Home
                       </MenuItem>
+
+                      {['/survey/[slug]', '/sucess/survey', '/upgrade/plans'] && (
+                        <MenuItem
+                          onClick={() => {
+                            setAnchorEl(null)
+                            router.push('/profile')
+                          }}
+                        >
+                          Profile
+                        </MenuItem>
+                      )}
 
                       <MenuItem
                         onClick={() => {
