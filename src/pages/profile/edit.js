@@ -111,6 +111,7 @@ const EditProfile = () => {
             id='country'
             type='text'
             value={country}
+
             // onChange={e => setCountry(e.target.value)}
           />
           <FormHelperText error={errors.country}>{errors.country}</FormHelperText>
@@ -121,6 +122,7 @@ const EditProfile = () => {
             <FormControl margin='normal' fullWidth>
               <InputLabel htmlFor='bankName'>Bank Name</InputLabel>
               <Input id='bankName' type='text' value={bankName} 
+
               // onChange={e => setBankName(e.target.value)} 
               
               />
@@ -133,6 +135,7 @@ const EditProfile = () => {
                 id='accountNumber'
                 type='text'
                 value={profileData.accountNumber}
+
                 // onChange={e => setAccountNumber(e.target.value)}
               />
               <FormHelperText error={errors.accountNumber}>{errors.accountNumber}</FormHelperText>
@@ -144,6 +147,7 @@ const EditProfile = () => {
                 id='accountName'
                 type='text'
                 value={profileData.accountName}
+
                 // onChange={e => setAccountName(e.target.value)}
               />
               <FormHelperText error={errors.accountName}>{errors.accountName}</FormHelperText>

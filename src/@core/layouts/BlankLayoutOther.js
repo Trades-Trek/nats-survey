@@ -94,7 +94,8 @@ function ResponsiveAppBar() {
       onClick={() => {
         if (route === 'logout') {
           userService.logout(clearStateUponLogout)
-          return
+          
+return
         }
         if (route) router.push(route)
       }}
