@@ -10,7 +10,7 @@ import Router from 'next/router'
 
 const EditProfile = () => {
   const { userBankDetail, user, setUserBankDetail } = useContext(AuthContext)
-  const bankAccount = userBankDetail?.[0]
+  const bankAccount = userBankDetail && userBankDetail.length ? userBankDetail[0] : null
 
   const [profileData, setProfileData] = useState({
     name: user.name,

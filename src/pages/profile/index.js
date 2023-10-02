@@ -10,7 +10,7 @@ import ListItemText from '@mui/material/ListItemText'
 
 const Profile = () => {
   const { userBankDetail, user } = useContext(AuthContext)
-  const bankAccount = userBankDetail?.[0];
+  const bankAccount = userBankDetail && userBankDetail.length ? userBankDetail[0] : null
 
   return (
     <CardWrapper HeaderComponent={<></>} title={''}>
