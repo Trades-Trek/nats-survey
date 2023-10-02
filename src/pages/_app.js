@@ -104,7 +104,7 @@ const App = props => {
           <title>{`Net surveys`}</title>
           <meta
             name='description'
-            content={`${themeConfig.templateName} – Fill surveys and get rewarded`}
+            content={`Nat surveys – Fill surveys and get rewarded`}
           />
           <meta name='keywords' content='surveys,' />
           <meta name='viewport' content='initial-scale=1, width=device-width' />
