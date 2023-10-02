@@ -22,14 +22,6 @@ import {
 import section2Image from 'public/images/landingPage/section2Image.png'
 import { howItWorks } from './data';
 import { faq } from './data';
-import plus from 'public/images/landingPage/plus.svg'
-import amazon from 'public/images/landingPage/amazon.svg'
-import visa from 'public/images/landingPage/visa.svg'
-import ebay from 'public/images/landingPage/ebay.svg'
-import expedia from 'public/images/landingPage/expedia.svg'
-import square from 'public/images/landingPage/square.svg'
-import connect from 'public/images/landingPage/connect.svg'
-import bicycle from 'public/images/landingPage/bicycle.svg'
 import Footer from './footer'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
