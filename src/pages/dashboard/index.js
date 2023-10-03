@@ -60,23 +60,19 @@ const Dashboard = () => {
     spacing={6}
     sx={{ marginTop: 10, background: 'white', padding: 10 }}
   >
-    {!userBankDetail && (
-      <CardImgTop
-        position="sticky"
-        style={{
-          top: -60,
-          position: 'absolute',
-          left: '50%',
-          transform: 'translateX(-50%)',
-        }}
-        sx={{ width: 395, height: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-      >
-        <Link href="/setup">
-          <AccountBalanceIcon style={{ height: '12px' }} />
-          <span>Setup your bank detail</span>
-        </Link>
-      </CardImgTop>
-    )}
+       {!userBankDetail && (
+            <Card
+              position='sticky'
+              style={{ top: -60, position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}
+              sx={{ width: 395, height: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+              <Link href='/setup'>
+                {' '}
+                <AccountBalanceIcon style={{ height: '12px' }} />
+                <span>Setup your bank detail</span>{' '}
+              </Link>
+            </Card>
+          )}
 
     <div style={{ textAlign: 'center', width: '100%' }}>
       {surveys.length > 0 ? (
