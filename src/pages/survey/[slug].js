@@ -17,7 +17,7 @@ import Clipboard from 'src/@core/components/Clipboard'
 
 const Questions = () => {
   const router = useRouter()
-  const { user, totalSurveyBalance, totalReferralBalance } = useContext(AuthContext)
+  const { user, totalSurveyBalance, totalReferralBalance,  setTotalSurveyBalance, } = useContext(AuthContext)
   const [questions, setQuestions] = useState(null)
   const [getSurveyLoading, setSurveyLoading] = useState(false)
   const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -125,6 +125,7 @@ const Questions = () => {
       const response = await surveyService.submitSurvey(userResponse, router.query.slug)
       if (response.success) {
         localStorage.setItem('new_survey_balance', response.surveyBalance)
+        setTotalSurveyBalance(response.totalSurveyBalance)
         toast.success('Response to survey submitted')
         setSubmitLoading(false)
         router.push('/success/survey')

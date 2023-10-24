@@ -123,6 +123,26 @@ function ResponsiveAppBar() {
       return <UniqueButton title='Logout' route='logout' />
     }
 
+    if (currentPageName === '/admin/hidden-auth-dashboard') {
+      return <UniqueButton title='Logout' route='logout' />
+    }
+
+    if (currentPageName === '/admin/newsurvey' || currentPageName === '/admin/withdrawalrequest') {
+      return (
+        <>
+          <Button
+            onClick={() => {
+              router.push('/admin/hidden-auth-dashboard')
+            }}
+            variant='text'
+          >
+            Home
+          </Button>
+          <UniqueButton title='Sign Out' route='logout' />
+        </>
+      )
+    }
+
     if (currentPageName === '/profile' || currentPageName === '/profile/edit' || currentPageName === '/setup') {
       return (
         <>

@@ -36,6 +36,21 @@ function adminLogin(data) {
 }
 
 
+function approvePendingWithdrawalRequest(body){
+  return fetchWrapper
+  .post(`${baseUrl}/admin-nat-sur/approvePendingWithdrawalRequest`, body)
+  .then(res => {
+    return res
+  })
+  .catch(error => {
+    if (error?.length > 0) {
+      return error[0]
+    }
+
+    return error
+  })
+}
+
 function pendingWithdrawalRequest(){
   return fetchWrapper
   .get(`${baseUrl}/admin-nat-sur/pendingWithdrawalRequest`)
@@ -433,6 +448,7 @@ export const userService = {
   login,
   adminLogin,
   pendingWithdrawalRequest,
+  approvePendingWithdrawalRequest,
   getBanks,
   verifyAccountNumber,
   getBankDetail,
