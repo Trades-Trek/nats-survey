@@ -79,7 +79,7 @@ return (
           <Link href={upgradeButtonHref}>Upgrade</Link>
         ) : (
           <Button onClick={()=> {
-            router.push('/upgrade/payment')
+            router.push('/upgrade/payment?sub=standard')
           }} variant='contained' sx={{ width: 200, background: '#FF8C09' }}>
             Upgrade
           </Button>
@@ -100,7 +100,7 @@ return (
           title='Basic'
           price='$500/month'
           features={['Access to high-paying surveys', 'Priority survey invitations', 'Bonus earning activities']}
-          upgradeButtonHref='/upgrade/payment'
+          upgradeButtonHref='/upgrade/payment?sub=basic'
         />
         <SubscriptionCard
           title='Standard'
@@ -123,7 +123,7 @@ return (
             'Faster reward processing',
             'Personalized recommendations'
           ]}
-          upgradeButtonHref='/upgrade/payment'
+          upgradeButtonHref='/upgrade/payment?sub=premium'
         />
       </Grid>
     </CardWrapper>

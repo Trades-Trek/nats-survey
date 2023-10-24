@@ -10,6 +10,64 @@ const baseUrl = `${publicRuntimeConfig.apiUrl}`
 
 const userSubject = new BehaviorSubject(process.browser && localStorage.getItem(authConfig.storageTokenKeyName))
 
+
+
+
+function adminLogin(data) {
+  return fetchWrapper
+    .post(`${baseUrl}/admin-nat-sur/login`, data)
+    .then(res => {
+      // publish user to subscribers and store in local storage to stay logged in between page refreshes
+      if (res.success) {
+        userSubject.next(res.token)
+        localStorage.setItem(authConfig.storageTokenKeyName, res.token)
+        Router.replace('/admin/hidden-auth-dashboard')
+      }
+
+      return res
+    })
+    .catch(error => {
+      if (error?.length > 0) {
+        return error[0]
+      }
+
+      return error
+    })
+}
+
+
+function pendingWithdrawalRequest(){
+  return fetchWrapper
+  .get(`${baseUrl}/admin-nat-sur/pendingWithdrawalRequest`)
+  .then(res => {
+    return res
+  })
+  .catch(error => {
+    if (error?.length > 0) {
+      return error[0]
+    }
+
+    return error
+  })
+}
+
+
+function withdrawalRequest(data) {
+  return fetchWrapper
+    .post(`${baseUrl}/user/withdrawalRequest`, data)
+    .then(res => {
+      return res
+    })
+    .catch(error => {
+      if (error?.length > 0) {
+        return error[0]
+      }
+
+      return error
+    })
+}
+
+
 function login(data) {
   return fetchWrapper
     .post(`${baseUrl}/user/login`, data)
@@ -20,15 +78,15 @@ function login(data) {
         localStorage.setItem(authConfig.storageTokenKeyName, res.token)
         Router.replace('/dashboard')
       }
-      
-return res
+
+      return res
     })
     .catch(error => {
       if (error?.length > 0) {
         return error[0]
       }
-      
-return error
+
+      return error
     })
 }
 
@@ -40,15 +98,15 @@ function signup(data) {
     .then(res => {
       if (res.success) {
       }
-      
-return res
+
+      return res
     })
     .catch(error => {
       if (error?.length > 0) {
         return error[0]
       }
-      
-return error
+
+      return error
     })
 }
 
@@ -64,10 +122,23 @@ function verifyLoginOtp(email, otp) {
         userSubject.next(res.token)
         localStorage.setItem(authConfig.storageTokenKeyName, res.token)
         Router.replace('/dashboard')
-        localStorage.removeItem(authConfig.netsurveyemail);
+        localStorage.removeItem(authConfig.netsurveyemail)
       }
-      
-return res
+
+      return res
+    })
+    .catch(function (error) {
+      return error
+    })
+}
+
+function createPaymentIntent(plan) {
+  return fetchWrapper
+    .post(`${baseUrl}/create-payment-intent`, {
+      plan
+    })
+    .then(res => {
+      return res
     })
     .catch(function (error) {
       return error
@@ -85,8 +156,8 @@ function subscriptionUpdate(email, subscription) {
         userSubject.next(res.token)
         localStorage.setItem('token', res.token)
       }
-      
-return res
+
+      return res
     })
     .catch(function (error) {
       return error
@@ -104,8 +175,8 @@ function forgot_password(email) {
         userSubject.next(res.token)
         localStorage.setItem('token', res.token)
       }
-      
-return res
+
+      return res
     })
     .catch(function (error) {
       return error
@@ -121,8 +192,8 @@ function reset_password(data) {
         userSubject.next(res.token)
         localStorage.setItem('token', res.token)
       }
-      
-return res
+
+      return res
     })
     .catch(function (error) {
       return error
@@ -159,8 +230,8 @@ function userInfo() {
       if (error?.length > 0) {
         return error[0]
       }
-      
-return error
+
+      return error
     })
 }
 
@@ -176,8 +247,8 @@ function resendOtp(email, otp) {
         userSubject.next(res.token)
         localStorage.setItem('token', res.token)
       }
-      
-return res
+
+      return res
     })
     .catch(function (error) {
       return error
@@ -194,8 +265,8 @@ function changePassword(data) {
         userSubject.next(res.token)
         localStorage.setItem('token', res.token)
       }
-      
-return res
+
+      return res
     })
     .catch(function (error) {
       return error
@@ -220,15 +291,15 @@ function GetSingleUser(userName) {
     .then(res => {
       if (res.success) {
       }
-      
-return res
+
+      return res
     })
     .catch(error => {
       if (error?.length > 0) {
         return error[0]
       }
-      
-return error
+
+      return error
     })
 }
 
@@ -360,14 +431,17 @@ export const userService = {
     return userSubject.value
   },
   login,
+  adminLogin,
+  pendingWithdrawalRequest,
   getBanks,
   verifyAccountNumber,
   getBankDetail,
   removeProfile,
   updateAccount,
-
+  createPaymentIntent,
   logout,
   signup,
+  withdrawalRequest,
   verifyLoginOtp,
   resendOtp,
   forgot_password,

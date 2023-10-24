@@ -13,7 +13,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
 import { Divider } from '@mui/material'
-import Clipboard  from 'src/@core/components/Clipboard'
+import Clipboard from 'src/@core/components/Clipboard'
 
 const Questions = () => {
   const router = useRouter()
@@ -63,8 +63,8 @@ const Questions = () => {
           setUserResponse(userResponse)
           setCurrentResponse(currentSelectedResponse)
         }
-        
-return
+
+        return
       }
       setSurveyLoading(false)
       toast.error('Failed to get survey')
@@ -79,7 +79,7 @@ return
     getSurvey()
   }, [router.query.slug])
 
-  const Title = () => {
+  const Title = ({ questionObject }) => {
     if (getSurveyLoading || !questions) {
       return <></>
     }
@@ -88,19 +88,19 @@ return
 
     let chipLabel = ''
     if (userSubCategory === 'free') {
-      chipLabel = questions?.normalPrice.toFixed(2)
+      chipLabel = questionObject?.normalPrice.toFixed(2)
     }
 
     if (userSubCategory === 'Premium') {
-      chipLabel = questions?.premiumPrice.toFixed(2)
+      chipLabel = questionObject?.premiumPrice.toFixed(2)
     }
 
     if (userSubCategory === 'Standard') {
-      chipLabel = questions?.standardPrice.toFixed(2)
+      chipLabel = questionObject?.standardPrice.toFixed(2)
     }
 
     if (userSubCategory === 'Basic') {
-      chipLabel = questions?.basicPrice.toFixed(2)
+      chipLabel = questionObject?.basicPrice.toFixed(2)
     }
 
     return (
@@ -108,7 +108,7 @@ return
         <Typography color='#000' fontSize='30px' fontStyle='normal' fontWeight={700} letterSpacing='0.3px'>
           {questions?.questions[currentQuestion].question}
         </Typography>
-        <Chip label={chipLabel} style={{ background: '#FF8C09', margin: 5 }} />
+        <Chip label={chipLabel} style={{ background: '#FF8C09', margin: 10 }} />
       </div>
     )
   }
@@ -128,8 +128,8 @@ return
         toast.success('Response to survey submitted')
         setSubmitLoading(false)
         router.push('/success/survey')
-        
-return
+
+        return
       }
       setSubmitLoading(false)
       toast.error(response.message || 'Error while sumbitting, Try again')
@@ -139,11 +139,14 @@ return
     }
   }
 
+  const gotoPayOut = () => router.push('/payout')
+
   return (
     <CardWrapper
       HeaderComponent={
         <Stack spacing={2} direction='row'>
           <Button
+            onClick={gotoPayOut}
             variant='outlined'
             sx={{
               color: 'red',
@@ -154,6 +157,7 @@ return
             Survey Balance: ${totalSurveyBalance}
           </Button>
           <Button
+            onClick={gotoPayOut}
             sx={{
               color: '#212121',
               border: '1px solid #254F1A'
@@ -171,7 +175,7 @@ return
       ) : (
         <>
           <CardContent>
-            <Title />
+            <Title questionObject={questions?.questions[currentQuestion]} />
             <Box sx={{ mt: 2 }}>
               <FormControl>
                 <RadioGroup
@@ -194,25 +198,27 @@ return
                     setUserResponse(updatedUserResponse)
                   }}
                 >
-                  {questions?.questions && questions?.questions.length && questions?.questions[currentQuestion].options.map(option => (
-                    <FormControlLabel
-                      style={{ width: 400, borderRadius: 38, background: '#F2F2F2', margin: 10, padding: 5 }}
-                      key={option}
-                      value={option}
-                      control={
-                        <Radio
-                          className='nat-survey-radios'
-                          sx={{
-                            color: 'red',
-                            '&.Mui-checked': {
-                              color: 'green !important'
-                            }
-                          }}
-                        />
-                      }
-                      label={option}
-                    />
-                  ))}
+                  {questions?.questions &&
+                    questions?.questions.length &&
+                    questions?.questions[currentQuestion].options.map(option => (
+                      <FormControlLabel
+                        style={{ width: 400, borderRadius: 38, background: '#F2F2F2', margin: 10, padding: 5 }}
+                        key={option}
+                        value={option}
+                        control={
+                          <Radio
+                            className='nat-survey-radios'
+                            sx={{
+                              color: 'red',
+                              '&.Mui-checked': {
+                                color: 'green !important'
+                              }
+                            }}
+                          />
+                        }
+                        label={option}
+                      />
+                    ))}
                 </RadioGroup>
               </FormControl>
             </Box>
@@ -298,7 +304,7 @@ return
               <Clipboard yourRefferal={user?.yourRefferal} />
             </Box>
 
-            <Typography variant="caption">
+            <Typography variant='caption'>
               Question {currentQuestion + 1} of {questions?.questions.length}{' '}
             </Typography>
           </CardContent>

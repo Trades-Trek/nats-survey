@@ -2,10 +2,6 @@
 import Head from 'next/head'
 import { Router } from 'next/router'
 
-
-
-
-
 // ** Loader Import
 import NProgress from 'nprogress'
 
@@ -29,6 +25,7 @@ import AclGuard from 'src/@core/components/auth/AclGuard'
 import ThemeComponent from 'src/@core/theme/ThemeComponent'
 import AuthGuard from 'src/@core/components/auth/AuthGuard'
 import GuestGuard from 'src/@core/components/auth/GuestGuard'
+import AdminGuard from 'src/@core/components/auth/AdminGuard'
 import WindowWrapper from 'src/@core/components/window-wrapper'
 
 // ** Spinner Import
@@ -72,11 +69,16 @@ if (themeConfig.routingLoader) {
   })
 }
 
-const Guard = ({ children, authGuard, guestGuard }) => {
-
+const Guard = ({ children, authGuard, guestGuard, adminGuard }) => {
   if (guestGuard) {
     return <GuestGuard fallback={<Spinner />}>{children}</GuestGuard>
-  } else if (!guestGuard && !authGuard) {
+  }
+  
+  if(adminGuard){
+    return <AdminGuard fallback={<Spinner />}>{children}</AdminGuard>
+  }
+  
+   if (!guestGuard && !authGuard) {
     return <>{children}</>
   } else {
     return <AuthGuard fallback={<Spinner />}>{children}</AuthGuard>
@@ -96,44 +98,38 @@ const App = props => {
   const authGuard = Component.authGuard ?? true
   const guestGuard = Component.guestGuard ?? false
   const aclAbilities = Component.acl ?? defaultACLObj
+  const adminGuard = Component.adminGuard ?? false
 
   return (
-    
-      <CacheProvider value={emotionCache}>
-        <Head>
-          <title>{`Nat surveys`}</title>
-          <meta
-            name='description'
-            content={`Nat surveys – Fill surveys and get rewarded`}
-          />
-          <meta name='keywords' content='surveys,' />
-          <meta name='viewport' content='initial-scale=1, width=device-width' />
-        </Head>
+    <CacheProvider value={emotionCache}>
+      <Head>
+        <title>{`Nat surveys`}</title>
+        <meta name='description' content={`Nat surveys – Fill surveys and get rewarded`} />
+        <meta name='keywords' content='surveys,' />
+        <meta name='viewport' content='initial-scale=1, width=device-width' />
+      </Head>
 
-        <AuthProvider>
-          <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
-            <SettingsConsumer>
-              {({ settings }) => {
-                return (
-                  <ThemeComponent settings={settings}>
-                    <WindowWrapper>
-                      <Guard authGuard={authGuard} guestGuard={guestGuard}>
-                     
-                          {getLayout(<Component {...pageProps} />)}
-                   
-                      </Guard>
-                    </WindowWrapper>
-                    <ReactHotToast>
-                      <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
-                    </ReactHotToast>
-                  </ThemeComponent>
-                )
-              }}
-            </SettingsConsumer>
-          </SettingsProvider>
-        </AuthProvider>
-      </CacheProvider>
-   
+      <AuthProvider>
+        <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
+          <SettingsConsumer>
+            {({ settings }) => {
+              return (
+                <ThemeComponent settings={settings}>
+                  <WindowWrapper>
+                    <Guard authGuard={authGuard} adminGuard={adminGuard} guestGuard={guestGuard}>
+                      {getLayout(<Component {...pageProps} />)}
+                    </Guard>
+                  </WindowWrapper>
+                  <ReactHotToast>
+                    <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
+                  </ReactHotToast>
+                </ThemeComponent>
+              )
+            }}
+          </SettingsConsumer>
+        </SettingsProvider>
+      </AuthProvider>
+    </CacheProvider>
   )
 }
 

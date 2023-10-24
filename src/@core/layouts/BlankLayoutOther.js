@@ -18,7 +18,6 @@ import React, { useContext } from 'react'
 import Hidden from '@mui/material/Hidden'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 
-
 // Styled component for Blank Layout component
 const BlankLayoutWrapper = styled(Box)(({ theme }) => ({
   height: '100vh',
@@ -67,7 +66,7 @@ export default BlankLayout
 
 function ResponsiveAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null)
-  const { setUser, user, setUserBankDetail, setTotalSurveyBalance,setTotalReferralBalance } = useContext(AuthContext)
+  const { setUser, user, setUserBankDetail, setTotalSurveyBalance, setTotalReferralBalance } = useContext(AuthContext)
 
   const handleMenu = event => {
     setAnchorEl(event.currentTarget)
@@ -80,22 +79,20 @@ function ResponsiveAppBar() {
   const router = useRouter()
   const currentPageName = router.pathname
 
- const clearStateUponLogout = () => {
-  setUser(null)
-  setTotalSurveyBalance(0)
-  setTotalReferralBalance(0)
-  setUserBankDetail(null)
- }
-
- 
+  const clearStateUponLogout = () => {
+    setUser(null)
+    setTotalSurveyBalance(0)
+    setTotalReferralBalance(0)
+    setUserBankDetail(null)
+  }
 
   const UniqueButton = ({ title, route }) => (
     <Button
       onClick={() => {
         if (route === 'logout') {
           userService.logout(clearStateUponLogout)
-          
-return
+
+          return
         }
         if (route) router.push(route)
       }}

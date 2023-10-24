@@ -1,9 +1,12 @@
 // ** React Imports
 import { createContext, useEffect, useState } from 'react'
-
+import jwt from 'jsonwebtoken'
 // ** Next Import
 import { useRouter } from 'next/router'
 import { userService } from 'src/services'
+
+// ** Get user id from old token
+// @ts-ignore
 
 // ** Config
 import authConfig from 'src/configs/auth'
@@ -17,9 +20,8 @@ const defaultProvider = {
   bankDetail: null,
   totalSurvBalance: 0,
   setTotalSurvBalance: () => null,
-  totalRefferalBalance:0,
-  setTotalRefferalBalance: () => null,
-
+  totalRefferalBalance: 0,
+  setTotalRefferalBalance: () => null
 }
 const AuthContext = createContext(defaultProvider)
 
@@ -31,11 +33,21 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(defaultProvider.loading)
   const [totalReferralBalance, setTotalReferralBalance] = useState(0)
   const router = useRouter()
+
   useEffect(() => {
     const initAuth = async () => {
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
 
       if (storedToken) {
+        const {
+          payload: { user_type }
+        } = jwt.decode(storedToken, { complete: true })
+
+        if (user_type === 'admin') {
+          setLoading(false)
+          return
+        }
+
         if (router.asPath === '/') {
           router.push('/dashboard')
         }
@@ -73,9 +85,9 @@ const AuthProvider = ({ children }) => {
     userBankDetail,
     setLoading,
     setUserBankDetail,
-    totalSurveyBalance, 
+    totalSurveyBalance,
     setTotalSurveyBalance,
-    totalReferralBalance, 
+    totalReferralBalance,
     setTotalReferralBalance
   }
 

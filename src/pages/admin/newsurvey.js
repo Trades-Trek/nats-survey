@@ -4,6 +4,7 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import BlankLayout from 'src/@core/layouts/BlankLayoutOther'
 import CardWrapper from 'src/component/Cardwrapper'
+import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
@@ -12,33 +13,24 @@ import toast from 'react-hot-toast'
 
 function transform(obj) {
   // Clone the original object to avoid modifying it directly
-  const transformedObj = JSON.parse(JSON.stringify(obj));
+  const transformedObj = JSON.parse(JSON.stringify(obj))
+  transformedObj.questions.forEach(e => {
+    e['normalPrice'] = parseFloat(e['normalPrice'])
+    e['basicPrice'] = parseFloat(e['basicPrice'])
+    e['standardPrice'] = parseFloat(e['standardPrice'])
+    e['premiumPrice'] = parseFloat(e['premiumPrice'])
+  })
 
-  // Transform the "options" arrays to arrays of strings
-  transformedObj.questions.forEach((question) => {
-    if (question.options && Array.isArray(question.options)) {
-      question.options = question.options.map((option) => option.option);
-    }
-  });
+  transformedObj.questions.forEach(e => {
+    e.options = e.options.map(e => e.option)
+  })
 
-  // Format numeric strings to numbers
-  const numericKeys = ["normalPrice", "basicPrice", "standardPrice", "premiumPrice"];
-  numericKeys.forEach((key) => {
-    if (!isNaN(parseFloat(transformedObj[key]))) {
-      transformedObj[key] = parseFloat(transformedObj[key]);
-    }
-  });
-
-  return transformedObj;
+  return transformedObj
 }
 
 const defaultValues = {
   title: '',
-  description: '',
-  normalPrice: '',
-  basicPrice: '',
-  standardPrice: '',
-  premiumPrice: ''
+  description: ''
 }
 
 const CreateSurveyForm = () => {
@@ -62,8 +54,10 @@ const CreateSurveyForm = () => {
 
   const onSubmit = async data => {
     setIsLoading(true)
-   const transformedData = transform(data)
-   const _data = {...transformedData,  slug: 'l'}
+    const tdata = transform(data)
+    console.log(tdata)
+
+    const _data = { ...tdata, slug: 'l' }
     try {
       const res = await surveyService.createSurvey(_data)
 
@@ -93,7 +87,14 @@ const CreateSurveyForm = () => {
 
   const addQuestion = () => {
     const questions = getValues('questions') || []
-    questions.push({ question: '', options: [{ option: '' }] })
+    questions.push({
+      question: '',
+      options: [{ option: '' }],
+      normalPrice: '',
+      basicPrice: '',
+      standardPrice: '',
+      premiumPrice: ''
+    })
     setValue('questions', questions)
     setQuestionsState(questions)
   }
@@ -181,7 +182,7 @@ const CreateSurveyForm = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={12} sx={{ my: 5 }}>
+              {/* <Grid item xs={12} sx={{ my: 5 }}>
                 <FormControl fullWidth>
                   <Controller
                     name='normalPrice'
@@ -237,7 +238,7 @@ const CreateSurveyForm = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={12} sx={{ my: 5 }}>
+              <Grid item xs={3} sx={{ my: 5 }}>
                 <FormControl fullWidth>
                   <Controller
                     name='standardPrice'
@@ -265,7 +266,7 @@ const CreateSurveyForm = () => {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={12} sx={{ my: 5 }}>
+              <Grid item xs={3} sx={{ my: 5 }}>
                 <FormControl fullWidth>
                   <Controller
                     name='premiumPrice'
@@ -291,7 +292,7 @@ const CreateSurveyForm = () => {
                     </FormHelperText>
                   )}
                 </FormControl>
-              </Grid>
+              </Grid> */}
 
               <Grid item xs={12}>
                 <Button
@@ -311,7 +312,7 @@ const CreateSurveyForm = () => {
               <Button onClick={addQuestion}>Add Question</Button>
               <div>
                 {questionsState.map((question, questionIndex) => (
-                  <div key={questionIndex}>
+                  <Box key={questionIndex} sx={{ my: 5 }}>
                     <Controller
                       name={`questions[${questionIndex}].question`}
                       control={control}
@@ -333,7 +334,109 @@ const CreateSurveyForm = () => {
                         <Button onClick={() => removeOption(questionIndex, optionIndex)}>Remove Option</Button>
                       </div>
                     ))}
-                  </div>
+
+                    {/* pricelist */}
+
+                    <Grid container spacing={5} sx={{ ml: 1 }}>
+                      <Grid item xs={3} sx={{}}>
+                        <FormControl fullWidth>
+                          <Controller
+                            name={`questions[${questionIndex}].normalPrice`}
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field: { value, onChange } }) => (
+                              <TextField
+                                type='text'
+                                placeholder='Amount per question'
+                                style={{ background: '#F4F4F4' }}
+                                label='Amount per question (normal users)'
+                                name={`questions[${questionIndex}].normalPrice`}
+                                value={value}
+                                onChange={onChange}
+                                control={control}
+                              />
+                            )}
+                          />
+                        </FormControl>
+                      </Grid>
+
+                      <Grid item xs={3} sx={{}}>
+                        <FormControl fullWidth>
+                          <Controller
+                            name={`questions[${questionIndex}].basicPrice`}
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field: { value, onChange } }) => (
+                              <TextField
+                                type='number'
+                                placeholder='Amount per question (basic users)'
+                                style={{ background: '#F4F4F4' }}
+                                label='Amount per question (basic users)'
+                                name={`questions[${questionIndex}].basicPrice`}
+                                value={value}
+                                onChange={onChange}
+                                control={control}
+                                error={Boolean(errors.basicPrice)}
+                              />
+                            )}
+                          />
+                        </FormControl>
+                      </Grid>
+
+                      <Grid item xs={3} sx={{}}>
+                        <FormControl fullWidth>
+                          <Controller
+                            name={`questions[${questionIndex}].standardPrice`}
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field: { value, onChange } }) => (
+                              <TextField
+                                type='number'
+                                placeholder='Amount per question (standard users)'
+                                style={{ background: '#F4F4F4' }}
+                                label='Amount per question (standard users)'
+                                name={`questions[${questionIndex}].standardPrice`}
+                                value={value}
+                                onChange={onChange}
+                                control={control}
+                                error={Boolean(errors.basicPrice)}
+                              />
+                            )}
+                          />
+                        </FormControl>
+                      </Grid>
+
+                      <Grid item xs={3} sx={{}}>
+                        <FormControl fullWidth>
+                          <Controller
+                            name={`questions[${questionIndex}].premiumPrice`}
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field: { value, onChange } }) => (
+                              <TextField
+                                type='number'
+                                placeholder='Amount per question (premium users)'
+                                style={{ background: '#F4F4F4' }}
+                                label='Amount per question (premium users)'
+                                name={`questions[${questionIndex}].premiumPrice`}
+                                value={value}
+                                onChange={onChange}
+                                control={control}
+                                error={Boolean(errors.basicPrice)}
+                              />
+                            )}
+                          />
+                          {errors.premiumPrice && (
+                            <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-email'>
+                              {errors.premiumPrice.message}
+                            </FormHelperText>
+                          )}
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+
+                    {/* pricelist */}
+                  </Box>
                 ))}
               </div>
               <Grid item xs={12}>
@@ -360,4 +463,4 @@ const CreateSurveyForm = () => {
 export default CreateSurveyForm
 
 CreateSurveyForm.getLayout = page => <BlankLayout>{page}</BlankLayout>
-CreateSurveyForm.authGuard = true
+CreateSurveyForm.adminGuard = true

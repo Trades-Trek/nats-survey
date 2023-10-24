@@ -1,6 +1,6 @@
 // ** React Imports
 import { useEffect } from 'react'
-
+import jwt from 'jsonwebtoken'
 // ** Next Import
 import { useRouter } from 'next/router'
 import authConfig from 'src/configs/auth'
@@ -8,7 +8,7 @@ import authConfig from 'src/configs/auth'
 // ** Hooks Import
 import { useAuth } from 'src/hooks/useAuth'
 
-const AuthGuard = props => {
+const AdminGuard = props => {
   const { children, fallback } = props
   const auth = useAuth()
   const router = useRouter()
@@ -18,24 +18,30 @@ const AuthGuard = props => {
         return
       }
 
-      if (auth.user === null && !window.localStorage.getItem(authConfig.storageTokenKeyName)) {
-        if (router.asPath !== '/') {
+      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+
+      if (storedToken) {
+        const {
+          payload: { user_type }
+        } = jwt.decode(storedToken, { complete: true })
+
+        if (user_type !== 'admin') {
           router.replace({
             pathname: '/login',
-            query: { returnUrl: router.asPath }
+         
           })
-        } else {
         }
+      } else {
+        router.replace({
+          pathname: '/login',
+        
+        })
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [router.route]
   )
-  if (auth.loading || auth.user === null) {
-    return fallback
-  }
-
   return <>{children}</>
 }
 
-export default AuthGuard
+export default AdminGuard
