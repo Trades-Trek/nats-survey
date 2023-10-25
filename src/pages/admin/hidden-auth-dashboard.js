@@ -34,12 +34,12 @@ const AdminDashboard = () => {
           router.push('/admin/withdrawalrequest')
         }}
       >
-        Pending withdrawal request
+        User withdrawal request
       </Button>
 
-      <Button color='primary' variant='contained'>
+      {/* <Button color='primary' variant='contained'>
         Completed users transaction
-      </Button>
+      </Button> */}
     </Grid>
   )
 }

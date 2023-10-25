@@ -226,6 +226,10 @@ function logout(clearStateUponLogout) {
   Router.push('/')
 }
 
+function upgradeSubscription(){
+  
+}
+
 // user info .............................................
 function userInfo() {
   return fetchWrapper
@@ -447,6 +451,7 @@ export const userService = {
   },
   login,
   adminLogin,
+  upgradeSubscription,
   pendingWithdrawalRequest,
   approvePendingWithdrawalRequest,
   getBanks,

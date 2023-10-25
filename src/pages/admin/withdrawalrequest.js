@@ -31,8 +31,6 @@ const AdminWithdrawalrequest = () => {
     getT()
   }, [])
 
-  console.log(pendingTransactions, '....pendingTransactions......')
-
   const whatToDisplay = t => {
     if (t.paymentMethod === 'cryptocurrency') {
       return t.cryptoWallet
