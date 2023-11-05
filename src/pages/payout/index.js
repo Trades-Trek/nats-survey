@@ -137,7 +137,7 @@ const PayoutCard = ({ title, amount, openModal, setOpenModal, setSurveyOrRefferr
           sx={{
             color: 'white',
             textAlign: 'center',
-            fontFamily: 'Raleway',
+            fontFamily: 'sans-serif',
             fontSize: '30px',
             fontStyle: 'normal',
             fontWeight: 700
@@ -179,7 +179,7 @@ const PaymentDetails = ({ selectedRadioButtonValue, surveyOrRefferral }) => {
     setTotalSurveyBalance,
     setTotalReferralBalance
   } = useContext(AuthContext)
-
+  const router = useRouter()
   const userbankDetailsObj = userBankDetail[0]
 
   const { accountNumber, accountName, bankName } = userbankDetailsObj
@@ -247,7 +247,6 @@ const PaymentDetails = ({ selectedRadioButtonValue, surveyOrRefferral }) => {
           textAlign: 'center',
           color: '#1D1D1D',
           fontSize: 18,
-          fontFamily: 'Raleway',
           fontWeight: 500,
           wordWrap: 'break-word'
         }}
@@ -344,7 +343,7 @@ const PaymentDetails = ({ selectedRadioButtonValue, surveyOrRefferral }) => {
 
         <br />
         <Button
-          onClick={() => history.push('/dashboard')}
+          onClick={() => router.push('/dashboard')}
           variant='contained'
           sx={{
             width: 190,

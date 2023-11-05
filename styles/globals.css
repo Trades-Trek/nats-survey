@@ -1,15 +1,19 @@
 html,
 body {
   min-height: 100%;
+  font-family: 'Raleway', sans-serif !important;
 }
+
+p, div, h4, h5, h6, input, fieldset, button{
+  font-family: 'Raleway', sans-serif;
+}
+
 
 #__next {
   height: 100%;
 }
 
 code {
-  font-family: 'Public Sans', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
   padding: 0.1rem 0.4rem;
   font-size: 90%;
   color: #d400ff;

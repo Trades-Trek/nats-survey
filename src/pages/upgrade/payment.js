@@ -23,7 +23,7 @@ const Payment = () => {
   const [pageError, setPageError] = useState(false)
   const [clientSecret, setClientSecret] = useState('')
   const stripePromise = loadStripe(
-    'pk_test_51O15AfKROfa3x9b7b1J2DfdAqaEZrYbdADIGgqVkeWBqsEEsNBkNK5wQkuDsONaMysMBLko7ZYsgfpwzjDCkwfFp00aiysRIjy'
+    'pk_test_51NGdH3D042ZsvsAiyGbxXRQM2WcN0ktfezvanGCCoAvjoikYgsPDFrEXjrF6x3h7X18vqA0vV4zpEPTGxT3sPOeM00kKsADl1m'
   )
   //const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -34,7 +34,6 @@ const Payment = () => {
       .createPaymentIntent(plan)
       .then(res => {
         if (res?.success === true) {
-          console.log(res)
           setClientSecret(res.clientSecret)
         } else {
           toast.error('Failed to load stripe page')
@@ -114,6 +113,7 @@ Payment.authGuard = true
 export default Payment
 
 function CheckoutForm() {
+  const { query } = useRouter()
   const stripe = useStripe()
   const elements = useElements()
 
@@ -163,7 +163,7 @@ function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${window.location.origin}/success/payment.js`
+        return_url: `${window.location.origin}/success/payment?sub=${query.sub}`
       }
     })
 

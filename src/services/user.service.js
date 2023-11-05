@@ -147,6 +147,18 @@ function verifyLoginOtp(email, otp) {
     })
 }
 
+
+function upgradeSubscription(data){
+  return fetchWrapper
+    .post(`${baseUrl}/user/upgradeSubscription`, data)
+    .then(res => {
+      return res
+    })
+    .catch(function (error) {
+      return error
+    })
+}
+
 function createPaymentIntent(plan) {
   return fetchWrapper
     .post(`${baseUrl}/create-payment-intent`, {
@@ -224,10 +236,6 @@ function logout(clearStateUponLogout) {
   userSubject.next(null)
   clearStateUponLogout()
   Router.push('/')
-}
-
-function upgradeSubscription(){
-  
 }
 
 // user info .............................................

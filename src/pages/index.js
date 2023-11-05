@@ -11,7 +11,7 @@ function Landing() {
   return (
   <>
     <ChakraProvider theme={theme}>
-      <Box fontFamily={"'Raleway', sans-serif;"}>
+    <Box>
         <LandingPage />
       </Box>
     </ChakraProvider>

@@ -2,6 +2,8 @@
 
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
+import { AuthContext } from 'src/context/AuthContext'
+import { useState, useContext } from 'react'
 
 import CardContent from '@mui/material/CardContent'
 import CardWrapper from 'src/component/Cardwrapper'
@@ -12,13 +14,14 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 const SurveySuccess = () => {
+  const { user } = useContext(AuthContext)
   const router = useRouter()
-  const surveyBalance = localStorage.getItem('new_survey_balance')
+
+  const surveyBalance = router.query.s;
 
   if (!surveyBalance) {
     router.push('/dashboard');
   }
-
 
   return (
     <CardWrapper HeaderComponent={<></>} title=''>
@@ -40,18 +43,28 @@ const SurveySuccess = () => {
               <strong style={{ color: 'black' }}>Hurray, You've made {surveyBalance}</strong>
             </Typography>
             <Button
-            onClick={() => {
-              router.push(`/dashboard`)
-            }}
+              onClick={() => {
+                router.push(`/dashboard`)
+              }}
               variant='contained'
-              sx={{ width: 220, p: 3, mt: 3, mb:5, background: '#FF8C09', color: 'black', textTransform: 'capitalize' }}
+              sx={{
+                width: 220,
+                p: 3,
+                mt: 3,
+                mb: 5,
+                background: '#FF8C09',
+                color: 'black',
+                textTransform: 'capitalize'
+              }}
             >
               Next Question <ArrowRightAltIcon />
             </Button>
 
-            <div style={{ fontSize: '12px', margin: '10px' }}>
-              <Link href='/upgrade/plans'>Upgrade to premium to earn more rewards.</Link>
-            </div>
+            {user.subscriptionCategory === 'free' && (
+              <div style={{ fontSize: '12px', margin: '10px' }}>
+                <Link href='/upgrade/plans'>Upgrade to premium to earn more rewards.</Link>
+              </div>
+            )}
 
             <Typography>{/* Your content here */}</Typography>
           </CardContent>
@@ -65,4 +78,3 @@ SurveySuccess.getLayout = page => <BlankLayout>{page}</BlankLayout>
 SurveySuccess.authGuard = true
 
 export default SurveySuccess
-

@@ -18,6 +18,10 @@ import Clipboard from 'src/@core/components/Clipboard'
 const Questions = () => {
   const router = useRouter()
   const { user, totalSurveyBalance, totalReferralBalance,  setTotalSurveyBalance, } = useContext(AuthContext)
+
+
+  const key = `${router.query.slug}-${user.email}`;
+
   const [questions, setQuestions] = useState(null)
   const [getSurveyLoading, setSurveyLoading] = useState(false)
   const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -26,8 +30,9 @@ const Questions = () => {
   const [isSubmitLoading, setSubmitLoading] = useState(false)
 
   const saveAndExit = () => {
+  
     localStorage.setItem(
-      router.query.slug,
+      key,
       JSON.stringify({
         currentQuestion,
         userResponse,
@@ -55,7 +60,7 @@ const Questions = () => {
         setQuestions(res.data.length > 0 ? res.data[0] : {})
         setSurveyLoading(false)
 
-        const isQuestionSaved = localStorage.getItem(router.query.slug)
+        const isQuestionSaved = localStorage.getItem(key)
 
         if (isQuestionSaved) {
           const { currentQuestion, userResponse, currentSelectedResponse } = JSON.parse(isQuestionSaved)
@@ -91,15 +96,15 @@ const Questions = () => {
       chipLabel = questionObject?.normalPrice.toFixed(2)
     }
 
-    if (userSubCategory === 'Premium') {
+    if (userSubCategory === 'premium') {
       chipLabel = questionObject?.premiumPrice.toFixed(2)
     }
 
-    if (userSubCategory === 'Standard') {
+    if (userSubCategory === 'standard') {
       chipLabel = questionObject?.standardPrice.toFixed(2)
     }
 
-    if (userSubCategory === 'Basic') {
+    if (userSubCategory === 'basic') {
       chipLabel = questionObject?.basicPrice.toFixed(2)
     }
 
@@ -124,11 +129,10 @@ const Questions = () => {
     try {
       const response = await surveyService.submitSurvey(userResponse, router.query.slug)
       if (response.success) {
-        localStorage.setItem('new_survey_balance', response.surveyBalance)
         setTotalSurveyBalance(response.totalSurveyBalance)
         toast.success('Response to survey submitted')
         setSubmitLoading(false)
-        router.push('/success/survey')
+        router.push(`/success/survey?s=${response.surveyBalance}`)
 
         return
       }
@@ -279,8 +283,6 @@ const Questions = () => {
               <Typography
                 sx={{
                   color: '#000',
-
-                  fontFamily: 'Raleway',
                   fontSize: '22px',
                   fontStyle: 'normal',
                   fontWeight: '700'
@@ -292,14 +294,12 @@ const Questions = () => {
               <Typography
                 sx={{
                   color: '#331685',
-
-                  fontFamily: 'Raleway',
                   fontSize: '18px',
                   fontStyle: 'normal',
                   fontWeight: '600'
                 }}
               >
-                Copy and share your Refer your to invite your friends to take this survey
+                Invite your friends to take part in the survey and earn cash rewards
               </Typography>
 
               <Clipboard yourRefferal={user?.yourRefferal} />
