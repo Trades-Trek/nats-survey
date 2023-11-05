@@ -103,7 +103,7 @@ const App = props => {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>{`Nat surveys`}</title>
+        <title>Nat surveys</title>
         <meta name='description' content={`Nat surveys – Fill surveys and get rewarded`} />
         <meta name='keywords' content='surveys,' />
         <meta name='viewport' content='initial-scale=1, width=device-width' />

@@ -44,7 +44,7 @@ const schema = yup.object().shape({
     .required()
 })
 
-const Login = () => {
+const AdminLogin = () => {
   // ** States
   const { setUser, setUserBankDetail, setTotalSurveyBalance, setTotalReferralBalance } = useContext(AuthContext)
   const [validate, setValidate] = useState(false)
@@ -191,8 +191,8 @@ const Login = () => {
   )
 }
 
-Login.getLayout = page => <BlankLayout>{page}</BlankLayout>
-Login.guestGuard = true
+AdminLogin.getLayout = page => <BlankLayout>{page}</BlankLayout>
+// AdminLogin.guestGuard = true
 
 
-export default Login
+export default AdminLogin
