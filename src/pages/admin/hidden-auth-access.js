@@ -192,7 +192,7 @@ const AdminLogin = () => {
 }
 
 AdminLogin.getLayout = page => <BlankLayout>{page}</BlankLayout>
-// AdminLogin.guestGuard = true
+AdminLogin.guestGuard = true
 
 
 export default AdminLogin

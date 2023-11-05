@@ -28,13 +28,13 @@ const AdminGuard = props => {
         if (user_type !== 'admin') {
           router.replace({
             pathname: '/login',
-            query: { returnUrl: 'cunt1' }
+         
           })
         }
       } else {
         router.replace({
           pathname: '/login',
-          query: { returnUrl: 'cunt2' }
+        
         })
       }
     },

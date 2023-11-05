@@ -12,6 +12,7 @@ const GuestGuard = props => {
   const { children, fallback } = props
   const auth = useAuth()
   const router = useRouter()
+  console.log('inside guest gaurd')
   useEffect(() => {
     if (!router.isReady) {
       return
