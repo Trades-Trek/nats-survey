@@ -34,7 +34,8 @@ const PaymentSuccess = () => {
     }
     c()
   }, [])
-  return (
+  
+return (
     <CardWrapper HeaderComponent={<></>} title=''>
       <Grid container spacing={6} sx={{ width: '30%', margin: '0 auto' }}>
         <Grid item xs={12}>

@@ -1,6 +1,7 @@
 // ** React Imports
 import { createContext, useEffect, useState } from 'react'
 import jwt from 'jsonwebtoken'
+
 // ** Next Import
 import { useRouter } from 'next/router'
 import { userService } from 'src/services'
@@ -45,7 +46,8 @@ const AuthProvider = ({ children }) => {
 
         if (user_type === 'admin') {
           setLoading(false)
-          return
+          
+return
         }
 
         if (router.asPath === '/') {

@@ -22,9 +22,11 @@ const Payment = () => {
 
   const [pageError, setPageError] = useState(false)
   const [clientSecret, setClientSecret] = useState('')
+
   const stripePromise = loadStripe(
     'pk_test_51NGdH3D042ZsvsAiyGbxXRQM2WcN0ktfezvanGCCoAvjoikYgsPDFrEXjrF6x3h7X18vqA0vV4zpEPTGxT3sPOeM00kKsADl1m'
   )
+
   //const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
   useEffect(() => {
@@ -59,6 +61,7 @@ const Payment = () => {
   const appearance = {
     theme: 'stripe'
   }
+
   const options = {
     clientSecret,
     appearance

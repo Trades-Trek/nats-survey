@@ -116,7 +116,8 @@ const PayoutCard = ({ title, amount, openModal, setOpenModal, setSurveyOrRefferr
 
   const toggle = () => setOpen(!open)
   const s = { verticalAlign: 'sub', cursor: 'pointer' }
-  return (
+  
+return (
     <Card
       sx={{
         borderRadius: '8px',
@@ -152,7 +153,8 @@ const PayoutCard = ({ title, amount, openModal, setOpenModal, setSurveyOrRefferr
           onClick={() => {
             if (amount <= 0) {
               toast.success('You have no sufficient balance to withdraw')
-              return
+              
+return
             }
             setSurveyOrRefferral(title)
             setOpenModal(true)
@@ -171,6 +173,7 @@ const PaymentDetails = ({ selectedRadioButtonValue, surveyOrRefferral }) => {
   const [loading, setLoading] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [cryptoWallet, setCryptoWallet] = useState('')
+
   const {
     user,
     totalSurveyBalance,
@@ -203,6 +206,7 @@ const PaymentDetails = ({ selectedRadioButtonValue, surveyOrRefferral }) => {
   const submit = async () => {
     if (!withdrawAmount) return
     setLoading(true)
+
     const body = {
       paymentMethod: selectedRadioButtonValue,
       referralOrSurvey: surveyOrRefferral,
@@ -222,7 +226,8 @@ const PaymentDetails = ({ selectedRadioButtonValue, surveyOrRefferral }) => {
         }
         toast.success('Successfully sent withdrawal request')
         setLoading(false)
-        return
+        
+return
       }
       setLoading(false)
       toast.error('Failed to submit withdraw request')

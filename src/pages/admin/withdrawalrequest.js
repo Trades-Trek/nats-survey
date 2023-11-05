@@ -43,7 +43,8 @@ const AdminWithdrawalrequest = () => {
     if (t.paymentMethod === 'bank_account') {
       return t.userId.email
     }
-    return ''
+    
+return ''
   }
 
   const approveTransaction = async transactionId => {
@@ -53,7 +54,8 @@ const AdminWithdrawalrequest = () => {
 
       if(!res.success){
         toast.error('Failed to updated to approved, try again')
-        return
+        
+return
       }
 
       // Update the pendingTransactions state to update the status of the approved transaction.
@@ -65,9 +67,11 @@ const AdminWithdrawalrequest = () => {
               status: 'approved'
             }
           }
-          return transaction
+          
+return transaction
         })
-        return updatedPendingTransactions
+        
+return updatedPendingTransactions
       })
       toast.success('Updated to approved')
     } catch (error) {

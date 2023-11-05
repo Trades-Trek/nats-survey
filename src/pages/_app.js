@@ -73,20 +73,24 @@ const Guard = ({ children, authGuard, guestGuard, adminGuard }) => {
 
   if (guestGuard) {
     console.log(1, 'guestGuard')
-    return <GuestGuard fallback={<Spinner />}>{children}</GuestGuard>
+    
+return <GuestGuard fallback={<Spinner />}>{children}</GuestGuard>
   }
   
   if(adminGuard){
     console.log(2)
-    return <AdminGuard fallback={<Spinner />}>{children}</AdminGuard>
+    
+return <AdminGuard fallback={<Spinner />}>{children}</AdminGuard>
   }
   
    if (!guestGuard && !authGuard) {
     console.log(3)
-    return <>{children}</>
+    
+return <>{children}</>
   } else {
     console.log(4)
-    return <AuthGuard fallback={<Spinner />}>{children}</AuthGuard>
+    
+return <AuthGuard fallback={<Spinner />}>{children}</AuthGuard>
   }
 }
 

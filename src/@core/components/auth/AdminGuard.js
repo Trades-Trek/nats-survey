@@ -1,6 +1,7 @@
 // ** React Imports
 import { useEffect } from 'react'
 import jwt from 'jsonwebtoken'
+
 // ** Next Import
 import { useRouter } from 'next/router'
 import authConfig from 'src/configs/auth'
@@ -41,7 +42,8 @@ const AdminGuard = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [router.route]
   )
-  return <>{children}</>
+  
+return <>{children}</>
 }
 
 export default AdminGuard
